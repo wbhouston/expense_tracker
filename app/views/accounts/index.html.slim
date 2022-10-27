@@ -1,0 +1,15 @@
+.p-8
+  h2 Accounts
+
+  .mt-8
+    = link_to('New Account', new_account_path)
+
+  .mt-8.grid.grid-cols-3.gap-y-2
+    .text-lg.font-semibold Account Name
+    .text-lg.font-semibold Type
+    .text-lg.font-semibold Number
+    
+    - @accounts.each do |account|
+      div = account.name
+      div = account.account_type.titleize
+      div = account.account_number
