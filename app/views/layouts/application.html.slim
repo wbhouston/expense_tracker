@@ -1,0 +1,15 @@
+doctype html
+
+head
+  title = 'Expense Tracker'
+  meta name='viewport' content='width=device-width,initial-scale=1'
+  = csrf_meta_tags
+  = csp_meta_tag
+
+  script src='https://cdn.tailwindcss.com/'
+
+  = stylesheet_link_tag 'application'
+  = javascript_importmap_tags
+
+body
+  = yield

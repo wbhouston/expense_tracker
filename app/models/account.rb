@@ -2,14 +2,41 @@
 
 class Account < ApplicationRecord
   TYPES = %w(asset expense investment liability revenue)
-  CREDIT_OR_DEBIT = %(CR DB)
+
+  TYPE_CREDIT_OR_DEBIT = {
+    asset: :debit,
+    expense: :debit,
+    investment: :debit,
+    liability: :credit,
+    revenue: :credit,
+  }.with_indifferent_access.freeze
+
+  TYPE_PREFIX = {
+    asset: '10',
+    expense: '60',
+    investment: '11',
+    liability: '20',
+    revenue: '40',
+  }.with_indifferent_access.freeze
+
+  validates(
+    :account_type,
+    :name,
+    :number,
+    presence: true,
+  )
 
   validates(
     :name,
-    :type,
-    :type_number,
     :number,
-    :credit_or_debit,
-    presence: true,
+    uniqueness: { scope: :account_type },
   )
+
+  def self.types_for_collection
+    TYPES.map { |type| [type.titleize, type] }
+  end
+
+  def account_number
+    "#{TYPE_PREFIX[account_type]}#{number}"
+  end
 end
