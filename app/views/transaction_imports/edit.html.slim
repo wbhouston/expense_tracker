@@ -1,0 +1,54 @@
+.p-8
+  h2 Parse Import Data
+
+  div.mt-8
+    = simple_form_for(\
+      @transaction_import_process_form,
+      data: { turbo: false },
+      method: :patch,
+      url: transaction_import_path(@transaction_import_process_form.transaction_import),
+    ) do |form|
+      div.text-red-700
+        = form.error :base
+
+      = form.input(:importing_account, collection: Account.all)
+
+      = form.input(\
+        :amount_mapping_type,
+        collection: TransactionImport::IMPORTING_ACCOUNT_MAPPING_TYPES,
+      )
+
+      = form.input(\
+        :single_column_amount_mapping,
+        collection: TransactionImport::IMPORTING_ACCOUNT_SINGLE_COLUMN_MAPPING,
+      )
+
+      table.w-full
+        thead
+          tr
+            - form.object.headers.each do |header|
+              th.font-bold.border-b.border-green-800 = header
+
+        tbody
+          tr
+            - form.object.headers.each_with_index do |_, i|
+              td.text-sm
+                = form.input(\
+                  :column_mappings,
+                  include_blank: true,
+                  collection: TransactionImport::IMPORTED_COLUMNS,
+                  label: false,
+                  input_html: {\
+                    name: 'transaction_import_process_form[column_mappings][]',
+                  },
+                  selected: form.object.column_mappings[i],
+                )
+
+          - form.object.previewed_rows.each do |row|
+            tr.text-xs
+              - row.each do |datum|
+                td
+                  div.truncate.w-48 = datum
+
+      .space-y-4.mt-8
+        = form.submit

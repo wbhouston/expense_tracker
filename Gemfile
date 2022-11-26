@@ -5,6 +5,10 @@ ruby "3.0.4"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.4"
+gem 'redis-rails', '~> 5.0'
+gem 'redis-objects', '~> 1.7'
+gem 'sidekiq', '~> 6.2'
+gem 'foreman'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"

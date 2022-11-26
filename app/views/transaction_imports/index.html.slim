@@ -1,0 +1,23 @@
+div.p-8
+  h2 Transaction Imports
+
+  div.mt-8
+    = link_to(\
+      'New Transaction Import',
+      new_transaction_import_path,
+      class: 'text-green-700 hover:text-green-500',
+    )
+
+  div.mt-8.grid.grid-cols-3.gap-y-2
+    div.text-lg.font-semibold Import Name
+    div.text-lg.font-semibold Number of New Rows
+    div.text-lg.font-semibold Actions
+
+    - @transaction_imports.each do |import|
+      div = import.name
+      div
+      div.flex.gap-x-4
+        = link_to(\
+          'Parse Import',
+          edit_transaction_import_path(import),
+        )

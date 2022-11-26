@@ -1,0 +1,75 @@
+TechCU,asset,00
+Foothills Checking,asset,01
+Foothills Savings,asset,02
+TVFCU,asset,03
+Cash,asset,10
+Ally,asset,20
+Campus Federal,asset,50
+Peyton Cash,asset,51
+CF Savings,asset,52
+Capital,asset,99
+ETrade,investment,00
+401(k),investment,20
+Vanguard,investment,30
+Health Equity,investment,40
+American Funds,investment,90
+Discover,liability,00
+Amazon,liability,10
+BofA,liability,20
+Ally CC,liability,40
+Lowes,liability,50
+Peyton,liability,90
+Peyton's Parents,liability,91
+Wages,revenue,00
+Freelance Wages,revenue,01
+Rental Income,revenue,02
+Gifts Received,revenue,20
+Card Rewards,revenue,30
+Peyton's Revenue,revenue,00
+Other Income,revenue,90
+Misc Personal,expense,00
+Entertainment,expense,01
+Personal Care,expense,02
+Gift Expenses,expense,03
+Videogames,expense,04
+Groceries,expense,10
+Dining Out,expense,11
+Dining Out Local,expense,12
+Alcohol,expense,13
+Utilities,expense,22
+House R&M,expense,23
+House Insurance,expense,25
+Landscaping,expense,26
+Pest Control,expense,27
+Mortgage,expense,28
+Misc Housing,expense,29
+Amazon Prime,expense,31
+Internet Subscription,expense,32
+Netflix,expense,33
+Website,expense,34
+Gas,expense,41
+Auto R&M,expense,43
+Auto Insurance,expense,44
+Other Transportation,expense,45
+Bicycle,expense,46
+Dental,expense,51
+Eye,expense,52
+Medical,expense,53
+Karl,expense,60
+Phone,expense,70
+Education,expense,80
+Investing Fees,expense,90
+BRWP Expenses,expense,10
+Barr Expenses,expense,20
+WTG Expenses,expense,30
+Travel,expense,40
+Kitchen F&E,expense,50
+Home Repair F&E,expense,51
+Furniture,expense,53
+Misc F&E,expense,59
+Peyton's Expense,expense,00
+Taxes,expense,00
+Income Taxes,expense,01
+Property Taxes,expense,02
+Retirement,expense,03
+Other Taxes,expense,99
