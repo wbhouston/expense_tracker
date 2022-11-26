@@ -1,15 +1,28 @@
-.p-8
+div.p-8
   h2 Accounts
 
-  .mt-8
-    = link_to('New Account', new_account_path)
+  div.mt-8
+    = link_to(\
+      'New Account',
+      new_account_path,
+      class: 'text-green-700 hover:text-green-500',
+    )
 
-  .mt-8.grid.grid-cols-3.gap-y-2
-    .text-lg.font-semibold Account Name
-    .text-lg.font-semibold Type
-    .text-lg.font-semibold Number
-    
+  div.mt-8.grid.grid-cols-4.gap-y-2
+    div.text-lg.font-semibold Account Name
+    div.text-lg.font-semibold Type
+    div.text-lg.font-semibold Number
+    div.text-lg.font-semibold Actions
+
     - @accounts.each do |account|
       div = account.name
       div = account.account_type.titleize
       div = account.account_number
+      div.flex.gap-x-4
+        = link_to('Edit', edit_account_path(account))
+        = link_to(\
+          'Delete',
+          account,
+          method: :delete,
+          data: { confirm: 'Are you sure?' },
+        )

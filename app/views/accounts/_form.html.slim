@@ -1,0 +1,6 @@
+= simple_form_for account do |account_form|
+  .space-y-4.mt-8
+    = account_form.input :name
+    = account_form.input :number
+    = account_form.input :account_type, collection: ::Account.types_for_collection
+    = account_form.submit

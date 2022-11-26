@@ -12,4 +12,13 @@ head
   = javascript_importmap_tags
 
 body
-  = yield
+  div.flex.flex-wrap.gap-x-4
+    div.basis-40.grow-0
+      div.flex.flex-col.flex-cols-1.gap-y-2.items-center.w-full.mt-8
+        = link_to(\
+          'Accounts',
+          accounts_path,
+          class: 'text-green-700 pl-8 w-full text-left hover:text-green-900 hover:bg-green-100',
+        )
+    div.basis-0.grow.min-width-half
+      = yield
