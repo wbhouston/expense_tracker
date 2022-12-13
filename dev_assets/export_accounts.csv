@@ -1,75 +1,75 @@
-TechCU,asset,00
-Foothills Checking,asset,01
-Foothills Savings,asset,02
-TVFCU,asset,03
-Cash,asset,10
-Ally,asset,20
-Campus Federal,asset,50
-Peyton Cash,asset,51
-CF Savings,asset,52
-Capital,asset,99
-ETrade,investment,00
-401(k),investment,20
-Vanguard,investment,30
-Health Equity,investment,40
-American Funds,investment,90
-Discover,liability,00
-Amazon,liability,10
-BofA,liability,20
-Ally CC,liability,40
-Lowes,liability,50
-Peyton,liability,90
-Peyton's Parents,liability,91
-Wages,revenue,00
-Freelance Wages,revenue,01
-Rental Income,revenue,02
-Gifts Received,revenue,20
-Card Rewards,revenue,30
-Peyton's Revenue,revenue,00
-Other Income,revenue,90
-Misc Personal,expense,00
-Entertainment,expense,01
-Personal Care,expense,02
-Gift Expenses,expense,03
-Videogames,expense,04
-Groceries,expense,10
-Dining Out,expense,11
-Dining Out Local,expense,12
-Alcohol,expense,13
-Utilities,expense,22
-House R&M,expense,23
-House Insurance,expense,25
-Landscaping,expense,26
-Pest Control,expense,27
-Mortgage,expense,28
-Misc Housing,expense,29
-Amazon Prime,expense,31
-Internet Subscription,expense,32
-Netflix,expense,33
-Website,expense,34
-Gas,expense,41
-Auto R&M,expense,43
-Auto Insurance,expense,44
-Other Transportation,expense,45
-Bicycle,expense,46
-Dental,expense,51
-Eye,expense,52
-Medical,expense,53
-Karl,expense,60
-Phone,expense,70
-Education,expense,80
-Investing Fees,expense,90
-BRWP Expenses,expense,10
-Barr Expenses,expense,20
-WTG Expenses,expense,30
-Travel,expense,40
-Kitchen F&E,expense,50
-Home Repair F&E,expense,51
-Furniture,expense,53
-Misc F&E,expense,59
-Peyton's Expense,expense,00
-Taxes,expense,00
-Income Taxes,expense,01
-Property Taxes,expense,02
-Retirement,expense,03
-Other Taxes,expense,99
+TechCU,Asset,1000
+Foothills Checking,Asset,1001
+Foothills Savings,Asset,1002
+TVFCU,Asset,1003
+Cash,Asset,1010
+Ally,Asset,1020
+Campus Federal,Asset,1050
+Peyton Cash,Asset,1051
+CF Savings,Asset,1052
+Capital,Asset,1099
+ETrade,Investment,1100
+401(k),Investment,1120
+Vanguard,Investment,1130
+Health Equity,Investment,1140
+American Funds,Investment,1190
+Discover,Liability,2000
+Amazon,Liability,2010
+BofA,Liability,2020
+Ally CC,Liability,2040
+Lowes,Liability,2050
+Peyton,Liability,2990
+Peyton's Parents,Liability,2991
+Wages,Revenue,4000
+Freelance Wages,Revenue,4001
+Rental Income,Revenue,4002
+Gifts Received,Revenue,4020
+Card Rewards,Revenue,4030
+Peyton's Revenue,Revenue,4500
+Other Income,Revenue,4990
+Misc Personal,Expense,6000
+Entertainment,Expense,6001
+Personal Care,Expense,6002
+Gift Expenses,Expense,6003
+Videogames,Expense,6004
+Groceries,Expense,6010
+Dining Out,Expense,6011
+Dining Out Local,Expense,6012
+Alcohol,Expense,6013
+Utilities,Expense,6022
+House R&M,Expense,6023
+House Insurance,Expense,6025
+Landscaping,Expense,6026
+Pest Control,Expense,6027
+Mortgage,Expense,6028
+Misc Housing,Expense,6029
+Amazon Prime,Expense,6031
+Internet Subscription,Expense,6032
+Netflix,Expense,6033
+Website,Expense,6034
+Gas,Expense,6041
+Auto R&M,Expense,6043
+Auto Insurance,Expense,6044
+Other Transportation,Expense,6045
+Bicycle,Expense,6046
+Dental,Expense,6051
+Eye,Expense,6052
+Medical,Expense,6053
+Karl,Expense,6060
+Phone,Expense,6070
+Education,Expense,6080
+Investing Fees,Expense,6090
+BRWP Expenses,Expense,6110
+Barr Expenses,Expense,6120
+WTG Expenses,Expense,6130
+Travel,Expense,6140
+Kitchen F&E,Expense,6150
+Home Repair F&E,Expense,6151
+Furniture,Expense,6153
+Misc F&E,Expense,6159
+Peyton's Expense,Expense,6500
+Taxes,Expense,6900
+Income Taxes,Expense,6901
+Property Taxes,Expense,6902
+Retirement,Expense,6903
+Other Taxes,Expense,6999

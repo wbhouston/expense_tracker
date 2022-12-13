@@ -2,6 +2,7 @@
 
 class TransactionsController < ApplicationController
   def index
-    @transactions = Transaction.all.reorder(date: :desc)
+    @transactions =
+      Transaction.all.reorder(date: :desc).page(params.fetch(:page, nil))
   end
 end

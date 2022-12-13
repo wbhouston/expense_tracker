@@ -10,6 +10,8 @@ gem 'redis-objects', '~> 1.7'
 gem 'sidekiq', '~> 6.2'
 gem 'foreman'
 
+gem 'kaminari'
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 gem 'simple_form'

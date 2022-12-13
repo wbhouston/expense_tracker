@@ -14,3 +14,5 @@ div.p-8
       div = transaction.account_credited&.name
       div = number_to_currency(transaction.amount)
       div = transaction.memo&.truncate(30)
+
+  = paginate @transactions

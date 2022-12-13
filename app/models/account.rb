@@ -11,14 +11,6 @@ class Account < ApplicationRecord
     revenue: :credit,
   }.with_indifferent_access.freeze
 
-  TYPE_PREFIX = {
-    asset: '10',
-    expense: '60',
-    investment: '11',
-    liability: '20',
-    revenue: '40',
-  }.with_indifferent_access.freeze
-
   validates(
     :account_type,
     :name,
@@ -37,6 +29,6 @@ class Account < ApplicationRecord
   end
 
   def account_number
-    "#{TYPE_PREFIX[account_type]}#{number}"
+    "#{number}"
   end
 end
