@@ -11,6 +11,18 @@ class Account < ApplicationRecord
     revenue: :credit,
   }.with_indifferent_access.freeze
 
+  has_many(
+    :credit_transactions,
+    class_name: Transaction.name,
+    foreign_key: :account_credited_id,
+  )
+
+  has_many(
+    :debit_transactions,
+    class_name: Transaction.name,
+    foreign_key: :account_debited_id,
+  )
+
   validates(
     :account_type,
     :name,
@@ -30,5 +42,9 @@ class Account < ApplicationRecord
 
   def account_number
     "#{number}"
+  end
+
+  def full_label
+    "#{number}-#{name}"
   end
 end

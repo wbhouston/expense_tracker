@@ -1,0 +1,42 @@
+div.p-8
+  h2 Merge Accounts
+
+  div.mt-8
+    = simple_form_for(\
+      @form,
+      method: :post,
+      url: merge_accounts_path,
+    ) do |form|
+      = form.input(\
+        :merge_into_id,
+        as: :select,
+        collection: @accounts,
+        label_method: :full_label,
+        input_html: { value: form.object.merge_into_id },
+      )
+
+      div.mt-8
+        - if form.object.errors.key?(:merge_account_ids)
+          div.mb-4.text-red-700
+            = form.object.errors.full_messages_for(:merge_account_ids).to_sentence
+        table
+          thead
+            tr
+              th Merge?
+              th Account
+              th Type
+          tbody
+            - @accounts.each do |account|
+              tr
+                td
+                  = check_box_tag(\
+                    'merge_accounts_form[merge_account_ids][]',
+                    account.id,
+                    false,
+                    checked: form.object.merge_account_ids.include?(account.id),
+                  )
+                td = account.full_label
+                td = account.account_type
+
+      div.mt-8
+        = form.submit

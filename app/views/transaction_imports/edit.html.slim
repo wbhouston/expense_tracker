@@ -4,7 +4,6 @@
   div.mt-8
     = simple_form_for(\
       @transaction_import_process_form,
-      data: { turbo: false },
       method: :patch,
       url: transaction_import_path(@transaction_import_process_form.transaction_import),
     ) do |form|
