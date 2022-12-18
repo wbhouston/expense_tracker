@@ -8,9 +8,21 @@ class Transaction < ApplicationRecord
 
   scope :with_account_id, -> (account_id) do
     where(
-      arel_table[:account_credited_id].eq(account_id).
-        or(arel_table[:account_debited_id].eq(account_id)),
+      arel_account_credited.eq(account_id).
+        or(arel_account_debited.eq(account_id)),
     )
+  end
+
+  scope :with_account_missing, -> do
+    where(arel_account_credited.eq(nil).or(arel_account_debited.eq(nil)))
+  end
+
+  def self.arel_account_credited
+    arel_table[:account_credited_id]
+  end
+
+  def self.arel_account_debited
+    arel_table[:account_debited_id]
   end
 
   def self.extract_month_from_date

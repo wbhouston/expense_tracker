@@ -1,0 +1,106 @@
+- input_base_name = "unmatched_transactions_form[transactions][]"
+
+div.p-8
+  h2 Unmatched Transactions
+
+  div.mt-8
+    = simple_form_for(\
+      @form,
+      method: :patch,
+      url: unmatched_transaction_path(:all),
+    ) do |form|
+      = form.submit
+
+      table.w-full
+        thead
+          tr.border-b-4.border-gray-400
+            th Date
+            th Account Debited
+            th Account Credited
+            th.text-right Amount
+            th.text-right Percent Shared
+            th Note
+            th Memo
+        tbody
+          - form.object.unmatched_transactions.each do |id, transaction|
+            tr.border-b.border-gray-100
+              td
+                = form.input(\
+                  :transactions,
+                  as: :hidden,
+                  input_html: {\
+                    name: "#{input_base_name}[id]",
+                    value: transaction.id,
+                  },
+                )
+                = form.input(\
+                  :transactions,
+                  as: :date,
+                  html5: true,
+                  label: false,
+                  input_html: {\
+                    name: "#{input_base_name}[date]",
+                    value: transaction.date,
+                  },
+                )
+              td
+                = form.input(\
+                  :transactions,
+                  as: :select,
+                  collection: form.object.accounts,
+                  label: false,
+                  include_blank: true,
+                  input_html: {\
+                    name: "#{input_base_name}[account_debited_id]",
+                  },
+                  selected: transaction.account_debited_id,
+                )
+              td
+                = form.input(\
+                  :transactions,
+                  as: :select,
+                  collection: form.object.accounts,
+                  label: false,
+                  include_blank: true,
+                  input_html: {\
+                    name: "#{input_base_name}[account_credited_id]",
+                  },
+                  selected: transaction.account_credited_id,
+                )
+              td.text-right
+                = form.input(\
+                  :transactions,
+                  label: false,
+                  input_html: {\
+                    class: 'text-right',
+                    name: "#{input_base_name}[amount]",
+                    value: number_with_precision(transaction.amount, precision: 2),
+                  },
+                )
+              td.text-right
+                = form.input(\
+                  :transactions,
+                  label: false,
+                  input_html: {\
+                    name: "#{input_base_name}[percent_shared]",
+                    value: transaction.percent_shared,
+                  },
+                )
+              td
+                = form.input(\
+                  :transactions,
+                  label: false,
+                  input_html: {\
+                    name: "#{input_base_name}[note]",
+                    value: transaction.note,
+                  },
+                )
+              td
+                = form.input(\
+                  :transactions,
+                  label: false,
+                  input_html: {\
+                    name: "#{input_base_name}[memo]",
+                    value: transaction.memo,
+                  },
+                )
