@@ -1,6 +1,24 @@
 div.p-8
   h2 Transactions
 
+  div.mt-8
+    = simple_form_for(\
+      :search,
+      method: :get,
+      url: transactions_path,
+    ) do |form|
+      = form.input(\
+        :account_id,
+        include_blank: true,
+        as: :select,
+        collection: Account.all.order_by_number,
+        label_method: :full_label,
+        selected: params.fetch(:search, {}).fetch(:account_id, nil),
+        required: false,
+      )
+
+      = form.submit 'Search'
+
   div.mt-8.grid.grid-cols-5.gap-y-2
     div.text-lg.font-semibold Date
     div.text-lg.font-semibold Account Debited

@@ -6,5 +6,9 @@ Rails.application.routes.draw do
   resources :transaction_imports, only: [:index, :new, :create, :edit, :update]
   resources :transactions, only: [:index]
 
+  namespace :reports do
+    resources :profit_and_losses, only: :index
+  end
+
   root 'accounts#index'
 end

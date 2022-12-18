@@ -36,6 +36,10 @@ class Account < ApplicationRecord
     uniqueness: { scope: :account_type },
   )
 
+  scope :expenses, -> { where(account_type: 'expense') }
+  scope :order_by_number, -> { reorder(:number) }
+  scope :revenues, -> { where(account_type: 'revenue') }
+
   def self.types_for_collection
     TYPES.map { |type| [type.titleize, type] }
   end
@@ -45,6 +49,6 @@ class Account < ApplicationRecord
   end
 
   def full_label
-    "#{number}-#{name}"
+    "#{number} - #{name}"
   end
 end

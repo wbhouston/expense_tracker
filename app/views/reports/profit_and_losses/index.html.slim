@@ -1,0 +1,31 @@
+div.p-8
+  h2 Profits and Losses Report
+
+  div.mt-8
+    table.w-full
+      thead
+        tr.border-b-4.border-gray-400
+          th Account
+          th.text-right.border-r-4.border-gray-400.pr-2 Totals
+          - (1..12).to_a.each do |month|
+            th.text-right = Date::MONTHNAMES[month]
+      tbody
+        - @report.revenue_accounts.each do |account|
+          tr.border-b.border-gray-100
+            td = account.full_label
+            td.text-right.border-r-4.border-gray-400.pr-2
+              = number_to_currency(@report.revenue_total(account_id: account.id))
+            - (1..12).to_a.each do |month|
+              td.text-right
+                = number_to_currency(@report.revenue(account_id: account.id, month: month))
+        tr.border-b-2.border-gray-400
+          td.text-left.pt-8 Expenses
+          td.text-right.border-r-4.border-gray-400.pr-2
+        - @report.expense_accounts.each do |account|
+          tr.border-b.border-gray-100
+            td = account.full_label
+            td.text-right.border-r-4.border-gray-400.pr-2
+              = number_to_currency(@report.expense_total(account_id: account.id))
+            - (1..12).to_a.each do |month|
+              td.text-right
+                = number_to_currency(@report.expense(account_id: account.id, month: month))
