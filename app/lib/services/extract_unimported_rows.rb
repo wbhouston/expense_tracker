@@ -46,7 +46,7 @@ module Services
     end
 
     def presented_csv_rows
-      @presented_csv_rows ||= parsed_csv.value[1..].map do |row|
+      @presented_csv_rows ||= parsed_csv[1..].map do |row|
         ::TransactionImportRowPresenter.new(
           row: row,
           transaction_import: transaction_import,
