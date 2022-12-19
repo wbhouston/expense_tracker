@@ -39,7 +39,7 @@ class TransactionImportsController < ApplicationController
   private
 
   def allowed_new_params
-    params.require(:transaction_import_form).permit(:csv, :name)
+    params.require(:transaction_import_form).permit(:import_csv, :name)
   end
 
   def allowed_processing_params

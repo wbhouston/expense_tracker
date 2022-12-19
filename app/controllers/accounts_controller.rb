@@ -4,7 +4,7 @@ class AccountsController < ApplicationController
   before_action :load_account, only: [:edit, :update, :destroy]
 
   def index
-    @accounts = Account.all.reorder([:account_type, :number])
+    @accounts = Account.all.reorder(:number)
   end
 
   def new

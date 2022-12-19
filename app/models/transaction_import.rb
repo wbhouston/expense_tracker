@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'csv'
+
 class TransactionImport < ApplicationRecord
   include ::Redis::Objects
 
@@ -19,8 +21,10 @@ class TransactionImport < ApplicationRecord
     positive_is_debit
   ).freeze
 
+  has_one_attached :import_csv
+
   list :column_mappings, marshal: true
-  list :parsed_csv, marshal: true
+  list :parsed_csv_cache, marshal: true, expire: 1.day
 
   value :amount_mapping_type_value
   value :importing_account_value
@@ -32,6 +36,14 @@ class TransactionImport < ApplicationRecord
 
   def amount_mapping_type=(val)
     amount_mapping_type_value.value = val
+  end
+
+  def parsed_csv
+    @parsed_csv ||= if parsed_csv_cache.value.present?
+                      parsed_csv_cache.value
+                    else
+                      parsed_csv_cache = CSV.parse(import_csv.download)
+                    end
   end
 
   def importing_account

@@ -4,5 +4,11 @@
   = simple_form_for @transaction_import_form, url: transaction_imports_path do |form|
     .space-y-4.mt-8
       = form.input :name
-      = form.input :csv, as: :file, input_html: { accept: 'text/csv', direct_upload: true }
+
+      = form.input(\
+        :import_csv,
+        as: :file,
+        input_html: { accept: 'text/csv' },
+      )
+
       = form.submit

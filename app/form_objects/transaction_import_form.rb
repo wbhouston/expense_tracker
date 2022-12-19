@@ -5,9 +5,10 @@ require 'csv'
 class TransactionImportForm
   include ::ActiveModel::Model
 
-  attr_reader :csv, :parsed_csv, :transaction_import
+  attr_reader :parsed_csv, :transaction_import
 
   delegate(
+    :import_csv,
     :name,
     :name=,
     to: :transaction_import
@@ -20,7 +21,8 @@ class TransactionImportForm
     super(params)
   end
 
-  def csv=(file)
+  def import_csv=(file)
+    transaction_import.import_csv = file
     @parsed_csv = CSV.read(file)
   end
 
@@ -28,7 +30,7 @@ class TransactionImportForm
     if valid?
       TransactionImport.transaction do
         @transaction_import.save!
-        @transaction_import.parsed_csv = parsed_csv
+        @transaction_import.parsed_csv_cache = parsed_csv
       end
 
       true
