@@ -1,0 +1,59 @@
+div.p-8
+  h2 Merge Transactions
+
+  div.mt-8
+    = simple_form_for(\
+      @form,
+      method: :post,
+      url: merge_transactions_path,
+    ) do |form|
+      div.mt-8
+        = form.submit
+
+      div.mt-8
+        table
+          thead
+            tr
+              th Merge or Ignore?
+              th Date
+              th Debit Account
+              th Credit Account
+              th Amount
+              th Note
+              th Memo
+          tbody
+            - @form.suggested_merges.each do |suggested_merge|
+              tr
+                td
+                  = form.input(\
+                    :merge_or_ignore,
+                    as: :select,
+                    collection: [['Ignore', :ignore], ['Merge', :merge]],
+                    include_blank: true,
+                    input_html: { name: "merge_transactions_form[][merge]" },
+                    label: false,
+                  )
+                  = text_field_tag(\
+                    "merge_transactions_form[][merge_into_id]",
+                    suggested_merge.id,
+                    class: 'hidden',
+                  )
+                  = text_field_tag(\
+                    "merge_transactions_form[][merge_id]",
+                    suggested_merge.matched_id,
+                    class: 'hidden',
+                  )
+                td = suggested_merge.date.iso8601
+                td = suggested_merge.account_debited.name
+                td = suggested_merge.account_credited.name
+                td = suggested_merge.amount
+                td = suggested_merge.note
+                td = suggested_merge.memo
+              tr.border-b-2.border-gray-500
+                td
+                td = suggested_merge.matched_date.iso8601
+                td = suggested_merge.account_debited.name
+                td = suggested_merge.account_credited.name
+                td = suggested_merge.amount
+                td = suggested_merge.matched_note
+                td = suggested_merge.matched_memo

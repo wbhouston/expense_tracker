@@ -1,10 +1,19 @@
-# frozen_string_literal: e
+# frozen_string_literal: true
 
 class Transaction < ApplicationRecord
-  belongs_to :account_credited, class_name: 'Account', optional: true
-  belongs_to :account_debited, class_name: 'Account', optional: true
+  belongs_to :account_credited, class_name: Account.name, optional: true
+  belongs_to :account_debited, class_name: Account.name, optional: true
+  belongs_to :parent, class_name: Transaction.name, optional: true
+
+  has_many(
+    :children,
+    class_name: Transaction.name,
+    foreign_key: :parent_id,
+  )
 
   validates(:date, :amount, presence: true)
+
+  scope :base_transactions, -> { where(type: nil) }
 
   scope :with_account_id, -> (account_id) do
     where(
@@ -41,5 +50,9 @@ class Transaction < ApplicationRecord
 
   def self.amount_sum
     arel_table[:amount].sum.as('amount_sum')
+  end
+
+  def active?
+    status == 'active'
   end
 end

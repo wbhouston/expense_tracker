@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_18_235646) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_20_182728) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -65,12 +65,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_18_235646) do
     t.decimal "amount", precision: 15, scale: 2, null: false
     t.integer "percent_shared"
     t.string "imported_transaction_id"
+    t.string "type"
+    t.string "status", default: "active"
+    t.bigint "parent_id"
     t.index ["account_credited_id"], name: "index_transactions_on_account_credited_id"
     t.index ["account_debited_id"], name: "index_transactions_on_account_debited_id"
+    t.index ["parent_id"], name: "index_transactions_on_parent_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "transactions", "accounts", column: "account_credited_id"
   add_foreign_key "transactions", "accounts", column: "account_debited_id"
+  add_foreign_key "transactions", "transactions", column: "parent_id"
 end
