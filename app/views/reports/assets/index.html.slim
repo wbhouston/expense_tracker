@@ -1,0 +1,45 @@
+div.p-8
+  h2 Assets Report
+
+  div.mt-8
+    table.w-full
+      thead
+        tr.border-b-4.border-gray-400
+          th Account
+          th.text-right.border-r-4.border-gray-400.pr-2 Starting Balance
+          - (1..12).to_a.each do |month|
+            th.text-right = Date::MONTHNAMES[month]
+      tbody
+        - @report.asset_accounts.each do |account|
+          tr.border-b.border-gray-100
+            td = account.full_label
+            td.text-right.border-r-4.border-gray-400.pr-2
+              = number_to_currency(\
+                @report.asset_account_per_month(account: account, month: 0),
+              )
+            - (1..12).to_a.each do |month|
+              td.text-right
+                = number_to_currency(\
+                  @report.asset_account_per_month(\
+                    account: account,
+                    month: month,
+                  ),
+                )
+        tr.border-b-2.border-gray-400
+          td.text-left.pt-8 Liabilities
+          td.text-right.border-r-4.border-gray-400.pr-2
+        - @report.liability_accounts.each do |account|
+          tr.border-b.border-gray-100
+            td = account.full_label
+            td.text-right.border-r-4.border-gray-400.pr-2
+              = number_to_currency(\
+                @report.liability_account_per_month(account: account, month: 0),
+              )
+            - (1..12).to_a.each do |month|
+              td.text-right
+                = number_to_currency(\
+                  @report.liability_account_per_month(\
+                    account: account,
+                    month: month,
+                  ),
+                )

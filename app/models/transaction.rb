@@ -39,6 +39,10 @@ class Transaction < ApplicationRecord
     arel_table[:account_debited_id]
   end
 
+  def self.arel_date
+    arel_table[:date]
+  end
+
   def self.extract_month_from_date
     ::Arel::Nodes::NamedFunction.new(
       'DATE_PART',

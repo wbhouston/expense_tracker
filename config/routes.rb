@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :unmatched_transactions, only: [:edit, :update]
 
   namespace :reports do
+    resources :assets, only: :index
     resources :profit_and_losses, only: :index
   end
 
