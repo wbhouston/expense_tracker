@@ -5,6 +5,16 @@ class TransactionsController < ApplicationController
     @transactions = load_transactions
   end
 
+  def destroy
+    @transaction = Transaction.find(params.fetch(:id))
+
+    if @transaction.destroy
+      redirect_to transactions_path, notice: 'Successfully destroyed the transaction'
+    else
+      redirect_to transactions_path, alert: 'Failed to destroy the transaction'
+    end
+  end
+
   private
 
   def account_search_param

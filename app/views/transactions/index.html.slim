@@ -19,18 +19,26 @@ div.p-8
 
       = form.submit 'Search'
 
-  div.mt-8.grid.grid-cols-5.gap-y-2
+  div.mt-8.grid.grid-cols-6.gap-y-2
     div.text-lg.font-semibold Date
     div.text-lg.font-semibold Account Debited
     div.text-lg.font-semibold Account Credited
     div.text-lg.font-semibold Amount
     div.text-lg.font-semibold Memo
+    div.text-lg.font-semibold Actions
 
     - @transactions.each do |transaction|
       div = transaction.date.iso8601
       div = transaction.account_debited&.name
       div = transaction.account_credited&.name
       div = number_to_currency(transaction.amount)
-      div = transaction.memo&.truncate(30)
+      div title="#{transaction.memo}" = transaction.memo&.truncate(30)
+      div = link_to(\
+        'Destroy',
+        transaction_path(transaction.id),
+        class: 'text-red-700 hover:text-red-900',
+        data: { confirm: 'Are you sure?' },
+        method: :delete,
+      )
 
   = paginate @transactions
