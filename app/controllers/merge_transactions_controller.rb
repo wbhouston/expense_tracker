@@ -8,9 +8,8 @@ class MergeTransactionsController < ApplicationController
   end
 
   def create
-    raise params
     if @form.perform
-      redirect_to accounts_path, notice: 'A worker has been created to merge these accounts'
+      redirect_to accounts_path, notice: 'Workers have been created to handle these merges'
     else
       load_accounts
 
@@ -21,10 +20,17 @@ class MergeTransactionsController < ApplicationController
   private
 
   def allowed_params
-    params.require(:merge_transactions_form).permit(
-      :merge_into_id,
-      merge_account_ids: [],
-    )
+    if params.key?(:merge_transactions_form)
+      params.require(:merge_transactions_form).permit(
+        merges: [
+          :merge_id,
+          :merge_into_id,
+          :merge_or_ignore,
+        ],
+      )
+    else
+      {}
+    end
   end
 
   def load_accounts
@@ -32,12 +38,6 @@ class MergeTransactionsController < ApplicationController
   end
 
   def load_form
-    @form = if params.key?(:merge_transactions_form)
-              ::MergeTransactionsForm.new(
-              )
-            else
-              ::MergeTransactionsForm.new(
-              )
-            end
+    @form = ::MergeTransactionsForm.new(params: allowed_params)
   end
 end

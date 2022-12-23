@@ -13,6 +13,7 @@ class Transaction < ApplicationRecord
 
   validates(:date, :amount, presence: true)
 
+  scope :active, -> { where(arel_active) }
   scope :base_transactions, -> { where(type: nil) }
 
   scope :with_account_id, -> (account_id) do
@@ -24,6 +25,10 @@ class Transaction < ApplicationRecord
 
   scope :with_account_missing, -> do
     where(arel_account_credited.eq(nil).or(arel_account_debited.eq(nil)))
+  end
+
+  def self.arel_active
+    arel_table[:status].eq('active')
   end
 
   def self.arel_account_credited

@@ -30,16 +30,16 @@ div.p-8
                     as: :select,
                     collection: [['Ignore', :ignore], ['Merge', :merge]],
                     include_blank: true,
-                    input_html: { name: "merge_transactions_form[][merge]" },
+                    input_html: { name: "merge_transactions_form[merges][][merge_or_ignore]" },
                     label: false,
                   )
                   = text_field_tag(\
-                    "merge_transactions_form[][merge_into_id]",
+                    "merge_transactions_form[merges][][merge_into_id]",
                     suggested_merge.id,
                     class: 'hidden',
                   )
                   = text_field_tag(\
-                    "merge_transactions_form[][merge_id]",
+                    "merge_transactions_form[merges][][merge_id]",
                     suggested_merge.matched_id,
                     class: 'hidden',
                   )

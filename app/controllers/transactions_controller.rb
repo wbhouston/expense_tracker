@@ -12,7 +12,7 @@ class TransactionsController < ApplicationController
   end
 
   def load_transactions
-    transactions = Transaction.all
+    transactions = Transaction.active
     if account_search_param.present?
       transactions = transactions.with_account_id(account_search_param)
     end

@@ -45,6 +45,7 @@ module Reports
           Transaction.extract_year_from_date.as('year'),
         ).
         where(Transaction.extract_year_from_date.eq(Date.current.year)).
+        where(Transaction.arel_active).
         group(
           Account.arel_table[:id],
           Transaction.extract_month_from_date,
@@ -65,6 +66,7 @@ module Reports
           Transaction.extract_year_from_date.as('year'),
         ).
         where(Transaction.extract_year_from_date.eq(Date.current.year)).
+        where(Transaction.arel_active).
         group(
           Account.arel_table[:id],
           Transaction.extract_month_from_date,
@@ -85,6 +87,7 @@ module Reports
           Transaction.extract_year_from_date.as('year'),
         ).
         where(Transaction.extract_year_from_date.eq(Date.current.year)).
+        where(Transaction.arel_active).
         group(
           Account.arel_table[:id],
           Transaction.extract_month_from_date,
@@ -105,6 +108,7 @@ module Reports
           Transaction.extract_year_from_date.as('year'),
         ).
         where(Transaction.extract_year_from_date.eq(Date.current.year)).
+        where(Transaction.arel_active).
         group(
           Account.arel_table[:id],
           Transaction.extract_month_from_date,
