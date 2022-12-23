@@ -33,9 +33,7 @@ module Reports
         where(Account.arel_type(eq: account_type)).
         where(Transaction.arel_date.lt(date)).
         where(Transaction.arel_active).
-        group(
-          Account.arel_table[:id],
-        )
+        group(Account.arel_table[:id])
     end
 
     def asset_account_rolling_totals

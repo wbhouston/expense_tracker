@@ -50,7 +50,7 @@ class MergeTransactionsForm
       where(transactions[:account_credited_id].eq(matched_transactions[:account_credited_id])).
       where(transactions[:account_debited_id].eq(matched_transactions[:account_debited_id])).
       where(transactions[:amount].eq(matched_transactions[:amount])).
-      where((transactions[:date] - matched_transactions[:date]).between(-3..3)).
+      where((transactions[:date] - matched_transactions[:date]).between(-4..4)).
       reorder(transactions[:date].desc)
   end
 
