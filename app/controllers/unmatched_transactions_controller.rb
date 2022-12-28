@@ -22,10 +22,7 @@ class UnmatchedTransactionsController < ApplicationController
       transactions: [
         :account_credited_id,
         :account_debited_id,
-        :amount,
-        :date,
         :id,
-        :memo,
         :note,
         :percent_shared,
       ],

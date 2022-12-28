@@ -27,19 +27,19 @@ class UnmatchedTransactionsForm
   end
 
   def unmatched_transactions
-    @unmatched_transactions ||= Transaction.with_account_missing.to_h do |transaction|
-      [transaction.id, transaction]
-    end
+    @unmatched_transactions ||= Transaction.
+      with_account_missing.
+      reorder(date: :desc).
+      to_h do |transaction|
+        [transaction.id, transaction]
+      end
   end
 
   def transactions=(params)
     params.each do |transaction|
       unmatched_transactions[transaction.fetch(:id).to_i].assign_attributes(
-        account_credited_id: transaction.fetch(:account_credited_id),
-        account_debited_id: transaction.fetch(:account_debited_id),
-        amount: transaction.fetch(:amount).to_d,
-        date: transaction.fetch(:date),
-        memo: transaction.fetch(:memo),
+        account_credited_id: transaction.fetch(:account_credited_id, nil),
+        account_debited_id: transaction.fetch(:account_debited_id, nil),
         note: transaction.fetch(:note),
         percent_shared: transaction.fetch(:percent_shared).to_i,
       )

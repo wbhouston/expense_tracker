@@ -37,6 +37,15 @@ div.p-8
               td.text-right
                 - if transaction.account_debited_id.present?
                   = transaction.account_debited.name
+
+                  = form.input(\
+                    :transactions,
+                    as: :hidden,
+                    input_html: {\
+                      name: "#{input_base_name}[account_debited_id]",
+                      value: transaction.account_debited_id,
+                    },
+                  )
                 - else
                   = form.input(\
                     :transactions,
@@ -52,6 +61,15 @@ div.p-8
               td.text-right
                 - if transaction.account_credited_id.present?
                   = transaction.account_credited.name
+
+                  = form.input(\
+                    :transactions,
+                    as: :hidden,
+                    input_html: {\
+                      name: "#{input_base_name}[account_credited_id]",
+                      value: transaction.account_credited_id,
+                    },
+                  )
                 - else
                   = form.input(\
                     :transactions,
@@ -71,6 +89,7 @@ div.p-8
                   :transactions,
                   label: false,
                   input_html: {\
+                    class: 'text-right',
                     name: "#{input_base_name}[percent_shared]",
                     value: transaction.percent_shared,
                   },
