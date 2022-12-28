@@ -15,8 +15,8 @@ div.p-8
         thead
           tr.border-b-4.border-gray-400
             th Date
-            th Account Debited
-            th Account Credited
+            th Debited
+            th Credited
             th.text-right Amount
             th.text-right Percent Shared
             th Note
@@ -24,7 +24,7 @@ div.p-8
         tbody
           - form.object.unmatched_transactions.each do |id, transaction|
             tr.border-b.border-gray-100
-              td
+              td.whitespace-nowrap
                 = form.input(\
                   :transactions,
                   as: :hidden,
@@ -33,50 +33,39 @@ div.p-8
                     value: transaction.id,
                   },
                 )
-                = form.input(\
-                  :transactions,
-                  as: :date,
-                  html5: true,
-                  label: false,
-                  input_html: {\
-                    name: "#{input_base_name}[date]",
-                    value: transaction.date,
-                  },
-                )
-              td
-                = form.input(\
-                  :transactions,
-                  as: :select,
-                  collection: form.object.accounts,
-                  label: false,
-                  include_blank: true,
-                  input_html: {\
-                    name: "#{input_base_name}[account_debited_id]",
-                  },
-                  selected: transaction.account_debited_id,
-                )
-              td
-                = form.input(\
-                  :transactions,
-                  as: :select,
-                  collection: form.object.accounts,
-                  label: false,
-                  include_blank: true,
-                  input_html: {\
-                    name: "#{input_base_name}[account_credited_id]",
-                  },
-                  selected: transaction.account_credited_id,
-                )
+                = transaction.date
               td.text-right
-                = form.input(\
-                  :transactions,
-                  label: false,
-                  input_html: {\
-                    class: 'text-right',
-                    name: "#{input_base_name}[amount]",
-                    value: number_with_precision(transaction.amount, precision: 2),
-                  },
-                )
+                - if transaction.account_debited_id.present?
+                  = transaction.account_debited.name
+                - else
+                  = form.input(\
+                    :transactions,
+                    as: :select,
+                    collection: form.object.accounts,
+                    label: false,
+                    include_blank: true,
+                    input_html: {\
+                      name: "#{input_base_name}[account_debited_id]",
+                    },
+                    selected: transaction.account_debited_id,
+                  )
+              td.text-right
+                - if transaction.account_credited_id.present?
+                  = transaction.account_credited.name
+                - else
+                  = form.input(\
+                    :transactions,
+                    as: :select,
+                    collection: form.object.accounts,
+                    label: false,
+                    include_blank: true,
+                    input_html: {\
+                      name: "#{input_base_name}[account_credited_id]",
+                    },
+                    selected: transaction.account_credited_id,
+                  )
+              td.text-right
+                = number_with_precision(transaction.amount, precision: 2)
               td.text-right
                 = form.input(\
                   :transactions,
@@ -96,11 +85,4 @@ div.p-8
                   },
                 )
               td
-                = form.input(\
-                  :transactions,
-                  label: false,
-                  input_html: {\
-                    name: "#{input_base_name}[memo]",
-                    value: transaction.memo,
-                  },
-                )
+                = transaction.memo
