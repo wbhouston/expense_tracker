@@ -2,6 +2,21 @@ div.p-8
   h2 Assets Report
 
   div.mt-8
+    = simple_form_for(\
+      :search,
+      method: :get,
+      url: reports_assets_path,
+    ) do |form|
+      = form.input(\
+        :year,
+        as: :select,
+        collection: ::Cache::TransactionYearRange.new.range,
+        selected: params.fetch(:search, {}).fetch(:year, Date.current.year),
+      )
+
+      = form.submit
+
+  div.mt-8
     table.w-full
       thead
         tr.border-b-4.border-gray-400

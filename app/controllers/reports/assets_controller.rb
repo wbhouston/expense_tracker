@@ -3,7 +3,13 @@
 module Reports
   class AssetsController < ApplicationController
     def index
-      @report = ::Reports::Assets.new
+      @report = ::Reports::Assets.new(year: search_year)
+    end
+
+    private
+
+    def search_year
+      params.fetch(:search, {}).fetch(:year, Date.current.year).to_i
     end
   end
 end

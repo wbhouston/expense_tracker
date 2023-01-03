@@ -2,6 +2,12 @@
 
 module Reports
   class ProfitAndLosses
+    attr_reader :year
+
+    def initialize(year:)
+      @year = year
+    end
+
     def expense(account_id:, month:)
       amount = expense_account_debits.fetch(account_id, {}).fetch(month, 0) -
         expense_account_credits.fetch(account_id, {}).fetch(month, 0)
@@ -44,7 +50,7 @@ module Reports
           Transaction.extract_month_from_date.as('month'),
           Transaction.extract_year_from_date.as('year'),
         ).
-        where(Transaction.extract_year_from_date.eq(Date.current.year)).
+        where(Transaction.extract_year_from_date.eq(year)).
         where(Transaction.arel_active).
         group(
           Account.arel_table[:id],
@@ -65,7 +71,7 @@ module Reports
           Transaction.extract_month_from_date.as('month'),
           Transaction.extract_year_from_date.as('year'),
         ).
-        where(Transaction.extract_year_from_date.eq(Date.current.year)).
+        where(Transaction.extract_year_from_date.eq(year)).
         where(Transaction.arel_active).
         group(
           Account.arel_table[:id],
@@ -86,7 +92,7 @@ module Reports
           Transaction.extract_month_from_date.as('month'),
           Transaction.extract_year_from_date.as('year'),
         ).
-        where(Transaction.extract_year_from_date.eq(Date.current.year)).
+        where(Transaction.extract_year_from_date.eq(year)).
         where(Transaction.arel_active).
         group(
           Account.arel_table[:id],
@@ -107,7 +113,7 @@ module Reports
           Transaction.extract_month_from_date.as('month'),
           Transaction.extract_year_from_date.as('year'),
         ).
-        where(Transaction.extract_year_from_date.eq(Date.current.year)).
+        where(Transaction.extract_year_from_date.eq(year)).
         where(Transaction.arel_active).
         group(
           Account.arel_table[:id],

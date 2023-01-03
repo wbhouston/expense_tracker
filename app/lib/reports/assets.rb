@@ -2,6 +2,12 @@
 
 module Reports
   class Assets
+    attr_reader :year
+
+    def initialize(year:)
+      @year = year
+    end
+
     def asset_account_per_month(account:, month:)
       amount = asset_account_rolling_totals[account.id][month]
 
@@ -39,7 +45,7 @@ module Reports
     def asset_account_rolling_totals
       @asset_account_per_month ||=
         begin
-          beginning_of_year = Date.current.beginning_of_year
+          beginning_of_year = Date.new(year,1,1).beginning_of_year
 
           (0..12).inject({}) do |running_totals, month_index|
             debits = transactions_before_date(
@@ -68,7 +74,7 @@ module Reports
     def liability_account_rolling_totals
       @liability_account_rolling_totals ||=
         begin
-          beginning_of_year = Date.current.beginning_of_year
+          beginning_of_year = Date.new(year,1,1).beginning_of_year
 
           (0..12).inject({}) do |running_totals, month_index|
             credits = transactions_before_date(
