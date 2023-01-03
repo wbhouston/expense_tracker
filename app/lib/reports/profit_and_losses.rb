@@ -24,6 +24,19 @@ module Reports
       amount.zero? ? nil : amount
     end
 
+    def expense_total_by_month(month:)
+      expense_accounts.inject(0) do |sum, account|
+        amount = (expense(account_id: account.id, month: month) || 0)
+        sum = sum + amount
+      end
+    end
+
+    def expense_total_all
+      expense_accounts.inject(0) do |sum, account|
+        sum = sum + (expense_total(account_id: account.id) || 0)
+      end
+    end
+
     def revenue(account_id:, month:)
       amount = revenue_account_credits.fetch(account_id, {}).fetch(month, 0) -
         revenue_account_debits.fetch(account_id, {}).fetch(month, 0)
@@ -34,6 +47,19 @@ module Reports
       amount = revenue_account_credits.fetch(account_id, {}).values.sum -
         revenue_account_debits.fetch(account_id, {}).values.sum
       amount.zero? ? nil : amount
+    end
+
+    def revenue_total_by_month(month:)
+      revenue_accounts.inject(0) do |sum, account|
+        amount = (revenue(account_id: account.id, month: month) || 0)
+        sum = sum + amount
+      end
+    end
+
+    def revenue_total_all
+      revenue_accounts.inject(0) do |sum, account|
+        sum = sum + (revenue_total(account_id: account.id) || 0)
+      end
     end
 
     def revenue_accounts
