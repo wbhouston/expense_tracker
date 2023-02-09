@@ -11,6 +11,7 @@ gem 'sidekiq', '~> 6.2'
 gem 'foreman'
 
 gem 'kaminari'
+gem 'active_link_to'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
