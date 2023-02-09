@@ -7,38 +7,50 @@ div.p-8
       method: :get,
       url: transactions_path,
     ) do |form|
-      = form.input(\
-        :account_id,
-        include_blank: true,
-        as: :select,
-        collection: Account.all.order_by_number,
-        label_method: :full_label,
-        selected: params.fetch(:search, {}).fetch(:account_id, nil),
-        required: false,
-      )
+      div.text-sm.mb-1.text-gray-700 Search for transactions by account
+      div.flex.space-x-4
+        = form.input(\
+          :account_id,
+          include_blank: true,
+          input_html: { class: 'rounded px-1 py-1.5' },
+          as: :select,
+          collection: Account.all.order_by_number,
+          label: false,
+          selected: params.fetch(:search, {}).fetch(:account_id, nil),
+          required: false,
+          wrapper: :expense_input,
+        )
 
-      = form.submit 'Search'
+        = form.submit(\
+          'Search',
+          class: 'text-sm bg-green-700 text-white px-2 py-1 rounded hover:bg-green-500 hover:cursor-pointer',
+        )
 
-  div.mt-8.grid.grid-cols-6.gap-y-2
-    div.text-lg.font-semibold Date
-    div.text-lg.font-semibold Account Debited
-    div.text-lg.font-semibold Account Credited
-    div.text-lg.font-semibold Amount
-    div.text-lg.font-semibold Memo
-    div.text-lg.font-semibold Actions
+  table.mt-8.min-w-full
+    thead.bg-gray-50.border-b.border-gray-200
+      tr
+        th.text-sm.font-semibold.py-2.pl-4.pr-3 Date
+        th.text-sm.font-semibold.py-2.px-3 Account Debited
+        th.text-sm.font-semibold.py-2.px-3 Account Credited
+        th.text-sm.font-semibold.py-2.px-3 Amount
+        th.text-sm.font-semibold.py-2.px-3 Memo
+        th.text-sm.font-semibold.py-2.pl-3.pr-4 Actions
 
-    - @transactions.each do |transaction|
-      div = transaction.date.iso8601
-      div = transaction.account_debited&.name
-      div = transaction.account_credited&.name
-      div = number_to_currency(transaction.amount)
-      div title="#{transaction.memo}" = transaction.memo&.truncate(30)
-      div = link_to(\
-        'Destroy',
-        transaction_path(transaction.id),
-        class: 'text-red-700 hover:text-red-900',
-        data: { confirm: 'Are you sure?' },
-        method: :delete,
-      )
+    tbody
+      - @transactions.each do |transaction|
+        tr class='even:bg-gray-50'
+          td class='text-sm pl-4 pr-3 py-1' = transaction.date.iso8601
+          td.text-sm.px-3.py-1 = transaction.account_debited&.name
+          td.text-sm.px-3.py-1 = transaction.account_credited&.name
+          td.text-sm.px-3.py-1 = number_to_currency(transaction.amount)
+          td.text-sm.px-3.py-1 title="#{transaction.memo}" = transaction.memo&.truncate(30)
+          td.text-sm.pl-3.pr-4.py-1.flex.gap-x-4
+            = link_to(\
+              'Delete',
+              transaction_path(transaction.id),
+              class: 'text-red-700 hover:text-red-900',
+              data: { confirm: 'Are you sure?' },
+              method: :delete,
+            )
 
   = paginate @transactions

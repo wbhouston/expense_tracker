@@ -9,22 +9,28 @@ div.p-8
       method: :patch,
       url: unmatched_transaction_path(:all),
     ) do |form|
-      = form.submit
+      = form.submit(\
+        'Update Transactions',
+        class: 'bg-green-700 text-white px-2 py-1 rounded hover:bg-green-500 hover:cursor-pointer',
+      )
 
-      table.w-full
-        thead
-          tr.border-b-4.border-gray-400
-            th Date
-            th Debited
-            th Credited
-            th.text-right Amount
-            th.text-right Percent Shared
-            th Note
-            th Memo
+      table.min-w-full.mt-8
+        thead.bg-gray-50
+          tr
+            th.text-left.text-sm.font-semibold.py-2.pl-4.pr-3 Date
+            th.text-right.text-sm.font-semibold.py-2.px-3 Debited
+            th.text-right.text-sm.font-semibold.py-2.px-3 Credited
+            th.text-right.text-sm.font-semibold.py-2.px-3 Amount
+            th.text-right.text-sm.font-semibold.py-2.px-3 Percent Shared
+            th.text-sm.font-semibold.py-2.pl-3.pr-4 Note
         tbody
           - form.object.unmatched_transactions.each do |id, transaction|
-            tr.border-b.border-gray-100
-              td.whitespace-nowrap
+            tr
+              td class='text-sm text-gray-700 pl-4 pt-1' colspan=6
+                = transaction.memo
+
+            tr
+              td.whitespace-nowrap.pt-1.pb-6.pl-4.pr-3
                 = form.input(\
                   :transactions,
                   as: :hidden,
@@ -34,7 +40,7 @@ div.p-8
                   },
                 )
                 = transaction.date
-              td.text-right
+              td.text-right.pt-1.pb-6.px-3
                 - if transaction.account_debited_id.present?
                   = transaction.account_debited.name
 
@@ -54,11 +60,12 @@ div.p-8
                     label: false,
                     include_blank: true,
                     input_html: {\
+                      class: 'p-0.5 bg-gray-100 border border-gray-300 rounded focus:ring-2 focus:ring-green-500',
                       name: "#{input_base_name}[account_debited_id]",
                     },
                     selected: transaction.account_debited_id,
                   )
-              td.text-right
+              td.text-right.pt-1.pb-6.px-3
                 - if transaction.account_credited_id.present?
                   = transaction.account_credited.name
 
@@ -78,30 +85,30 @@ div.p-8
                     label: false,
                     include_blank: true,
                     input_html: {\
+                      class: 'p-0.5 bg-gray-100 border border-gray-300 rounded focus:ring-2 focus:ring-green-500',
                       name: "#{input_base_name}[account_credited_id]",
                     },
                     selected: transaction.account_credited_id,
                   )
-              td.text-right
+              td.text-right.pt-1.pb-6.px-3
                 = number_with_precision(transaction.amount, precision: 2)
-              td.text-right
+              td.text-right.pt-1.pb-6.px-3
                 = form.input(\
                   :transactions,
                   label: false,
                   input_html: {\
-                    class: 'text-right',
+                    class: 'p-0.5 border border-gray-300 rounded text-right focus:ring-2 focus:ring-green-500',
                     name: "#{input_base_name}[percent_shared]",
                     value: transaction.percent_shared,
                   },
                 )
-              td
+              td.pt-1.pb-6.pl-3.pr-4
                 = form.input(\
                   :transactions,
                   label: false,
                   input_html: {\
+                    class: 'p-0.5 border border-gray-300 rounded focus:ring-2 focus:ring-green-500',
                     name: "#{input_base_name}[note]",
                     value: transaction.note,
                   },
                 )
-              td
-                = transaction.memo

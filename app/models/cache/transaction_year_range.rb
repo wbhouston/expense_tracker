@@ -14,7 +14,7 @@ module Cache
     value :min_transaction_year_value, expire: 1.hour
 
     def range
-      min_transaction_year.to_i..max_transaction_year.to_i
+      (min_transaction_year.to_i..max_transaction_year.to_i).to_a.reverse
     end
 
     def max_transaction_year

@@ -2,25 +2,33 @@ div.p-8
   h2 Accounts
 
   div.mt-8
-    = link_to(\
+    = button(\
       'New Account',
       new_account_path,
-      class: 'text-green-700 hover:text-green-500',
     )
 
-  div.mt-8.grid.grid-cols-3.gap-y-2
-    div.text-lg.font-semibold Account
-    div.text-lg.font-semibold Type
-    div.text-lg.font-semibold Actions
+  table.min-w-fit.mt-8
+    thead.bg-gray-50
+      tr
+        th.text-sm.font-semibold.py-2.pl-4.pr-3 Account
+        th.text-sm.font-semibold.py-2.px-3 Type
+        th.text-sm.font-semibold.py-2.pl-3.pr-4 Actions
+    tbody
+      - @accounts.each do |account|
+        tr
+          td.text-sm.pl-4.pr-3.py-1 = account.full_label
+          td.text-sm.px-3.py-1 = account.account_type.titleize
+          td.text-sm.pl-3.pr-4.py-1.flex.gap-x-4
+            = link_to(\
+              'Edit',
+              edit_account_path(account),
+              class: 'text-sm text-green-700 hover:text-green-500',
+            )
 
-    - @accounts.each do |account|
-      div = account.full_label
-      div = account.account_type.titleize
-      div.flex.gap-x-4
-        = link_to('Edit', edit_account_path(account))
-        = link_to(\
-          'Delete',
-          account,
-          method: :delete,
-          data: { confirm: 'Are you sure?' },
-        )
+            = link_to(\
+              'Delete',
+              account,
+              class: 'text-sm text-green-700 hover:text-green-500',
+              method: :delete,
+              data: { confirm: 'Are you sure?' },
+            )

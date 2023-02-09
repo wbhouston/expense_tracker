@@ -12,7 +12,12 @@ div.p-8
         as: :select,
         collection: @accounts,
         label_method: :full_label,
-        input_html: { value: form.object.merge_into_id },
+        input_html: {\
+          class: 'px-1 py-1.5 bg-gray-100 border border-gray-300 rounded focus:ring-2 focus:ring-green-500',
+          value: form.object.merge_into_id,
+        },
+        wrapper: :expense_input,
+        wrapper_html: { class: 'max-w-lg' },
       )
 
       div.mt-8
@@ -20,23 +25,29 @@ div.p-8
           div.mb-4.text-red-700
             = form.object.errors.full_messages_for(:merge_account_ids).to_sentence
         table
-          thead
+          thead.bg-gray-50
             tr
-              th Merge?
-              th Account
-              th Type
+              th.text-sm.font-semibold.py-2.pl-4.pr-3 Merge?
+              th.text-sm.font-semibold.py-2.px-3 Account
+              th.text-sm.font-semibold.py-2.pl-3.pr-4 Type
           tbody
             - @accounts.each do |account|
               tr
-                td
+                td.text-sm.pl-4.pr-3.py-1
                   = check_box_tag(\
                     'merge_accounts_form[merge_account_ids][]',
                     account.id,
                     false,
                     checked: form.object.merge_account_ids.include?(account.id),
                   )
-                td = account.full_label
-                td = account.account_type
+                td.text-sm.px-3.py-1 = account.full_label
+                td.text-sm.pl-3.pr-4.py-1 = account.account_type
 
       div.mt-8
-        = form.submit
+        = form.submit(\
+          'Submit',
+          class: [\
+            'bg-green-700 text-white text-sm px-2 py-1 rounded',
+            'hover:bg-green-500 hover:cursor-pointer',
+          ].join(' '),
+        )

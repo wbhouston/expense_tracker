@@ -7,14 +7,22 @@ div.p-8
       method: :get,
       url: reports_assets_path,
     ) do |form|
-      = form.input(\
-        :year,
-        as: :select,
-        collection: ::Cache::TransactionYearRange.new.range,
-        selected: params.fetch(:search, {}).fetch(:year, Date.current.year),
-      )
+      div.text-sm.mb-1.text-gray-700 Select a year for the report
+      div.flex.space-x-4
+        = form.input(\
+          :year,
+          as: :select,
+          collection: ::Cache::TransactionYearRange.new.range,
+          input_html: { class: 'rounded px-1 py-1.5' },
+          label: false,
+          selected: params.fetch(:search, {}).fetch(:year, ::Cache::TransactionYearRange.new.max_transaction_year),
+          wrapper: :expense_input,
+        )
 
-      = form.submit
+        = form.submit(\
+          'Search',
+          class: 'bg-green-700 text-white px-2 py-1 rounded hover:bg-green-500 hover:cursor-pointer',
+        )
 
   div.mt-8
     table.w-full

@@ -1,5 +1,5 @@
 .p-8
-  h2 Parse Import Data
+  h2 Process Import Data
 
   div.mt-8
     = simple_form_for(\
@@ -10,23 +10,33 @@
       div.text-red-700
         = form.error :base
 
-      = form.input(:importing_account, collection: Account.all)
+      div.max-w-md.space-y-2
+        = form.input(\
+          :importing_account,
+          collection: Account.all,
+          input_html: { class: 'rounded px-1 py-1.5' },
+          wrapper: :expense_input,
+        )
 
-      = form.input(\
-        :amount_mapping_type,
-        collection: TransactionImport::IMPORTING_ACCOUNT_MAPPING_TYPES,
-      )
+        = form.input(\
+          :amount_mapping_type,
+          collection: TransactionImport::IMPORTING_ACCOUNT_MAPPING_TYPES,
+          input_html: { class: 'rounded px-1 py-1.5' },
+          wrapper: :expense_input,
+        )
 
-      = form.input(\
-        :single_column_amount_mapping,
-        collection: TransactionImport::IMPORTING_ACCOUNT_SINGLE_COLUMN_MAPPING,
-      )
+        = form.input(\
+          :single_column_amount_mapping,
+          collection: TransactionImport::IMPORTING_ACCOUNT_SINGLE_COLUMN_MAPPING,
+          input_html: { class: 'rounded px-1 py-1.5' },
+          wrapper: :expense_input,
+        )
 
-      table.w-full
+      table.w-full.mt-4
         thead
           tr
             - form.object.headers.each do |header|
-              th.font-bold.border-b.border-green-800 = header
+              th.text-left.font-bold.border-b.border-green-800 = header
 
         tbody
           tr
@@ -38,6 +48,7 @@
                   collection: TransactionImport::IMPORTED_COLUMNS,
                   label: false,
                   input_html: {\
+                    class: 'rounded px-0.5 py-0.5',
                     name: 'transaction_import_process_form[column_mappings][]',
                   },
                   selected: form.object.column_mappings[i],
@@ -50,4 +61,7 @@
                   div.truncate.w-48 = datum
 
       .space-y-4.mt-8
-        = form.submit
+        = form.submit(\
+          'Process',
+          class: 'bg-green-700 text-white px-2 py-1 rounded hover:bg-green-500 hover:cursor-pointer',
+        )

@@ -8,6 +8,26 @@
 #
 # Use this setup block to configure all options available in SimpleForm.
 SimpleForm.setup do |config|
+  config.wrappers(
+    :expense_input,
+    class: '',
+    hint_class: '',
+    error_class: '',
+    valid_class: ''
+  ) do |b|
+    b.use :html5
+    b.use :placeholder
+    b.optional :autocomplete
+    b.optional :readonly
+
+    b.wrapper tag: :div, class: 'flex flex-col space-y-1' do |outer|
+      outer.use :label, class: 'text-xs font-medium text-gray-700', error_class: 'text-red-700'
+      outer.use :input, autocomplete: 'off',  error_class: 'border-2 border-red-700'
+      outer.use :error, wrap_with: { tag: :p, class: 'text-sm text-red-700' }
+      outer.use :hint, wrap_with: { tag: :p, class: 'text-sm text-gray-600' }
+    end
+  end
+
   # Wrappers are used by the form builder to generate a
   # complete input. You can remove any component from the
   # wrapper, change the order or even add your own to the

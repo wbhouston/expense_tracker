@@ -8,52 +8,57 @@ div.p-8
       url: merge_transactions_path,
     ) do |form|
       div.mt-8
-        = form.submit
+        = form.submit(\
+          'Update Transactions',
+          class: 'bg-green-700 text-white px-2 py-1 rounded hover:bg-green-500 hover:cursor-pointer',
+        )
 
-      div.mt-8
-        table
-          thead
+      table.min-w-full.mt-8
+        thead.bg-gray-50
+          tr
+            th.text-center.text-sm.font-semibold.py-2.pl-4.pr-3 Merge or Ignore?
+            th.text-center.text-sm.font-semibold.py-2.px-3 Date
+            th.text-center.text-sm.font-semibold.py-2.px-3 Debit Account
+            th.text-center.text-sm.font-semibold.py-2.px-3 Credit Account
+            th.text-right.text-sm.font-semibold.py-2.px-3 Amount
+            th.text-center.text-sm.font-semibold.py-2.px-3 Note
+            th.text-center.text-sm.font-semibold.py-2.px-3 Memo
+        tbody
+          - @form.suggested_merges.each do |suggested_merge|
             tr
-              th Merge or Ignore?
-              th Date
-              th Debit Account
-              th Credit Account
-              th Amount
-              th Note
-              th Memo
-          tbody
-            - @form.suggested_merges.each do |suggested_merge|
-              tr
-                td
-                  = form.input(\
-                    :merge_or_ignore,
-                    as: :select,
-                    collection: [['Ignore', :ignore], ['Merge', :merge]],
-                    include_blank: true,
-                    input_html: { name: "merge_transactions_form[merges][][merge_or_ignore]" },
-                    label: false,
-                  )
-                  = text_field_tag(\
-                    "merge_transactions_form[merges][][merge_into_id]",
-                    suggested_merge.id,
-                    class: 'hidden',
-                  )
-                  = text_field_tag(\
-                    "merge_transactions_form[merges][][merge_id]",
-                    suggested_merge.matched_id,
-                    class: 'hidden',
-                  )
-                td = suggested_merge.date.iso8601
-                td = suggested_merge.account_debited.name
-                td = suggested_merge.account_credited.name
-                td = suggested_merge.amount
-                td = suggested_merge.note
-                td = suggested_merge.memo
-              tr.border-b-2.border-gray-500
-                td
-                td = suggested_merge.matched_date.iso8601
-                td = suggested_merge.account_debited.name
-                td = suggested_merge.account_credited.name
-                td = suggested_merge.amount
-                td = suggested_merge.matched_note
-                td = suggested_merge.matched_memo
+              td.text-sm.pl-4.pr-3.py-1
+                = form.input(\
+                  :merge_or_ignore,
+                  as: :select,
+                  collection: [['Ignore', :ignore], ['Merge', :merge]],
+                  include_blank: true,
+                  input_html: {\
+                    class: 'px-1 py-0.5 bg-gray-100 border border-gray-300 rounded focus:ring-2 focus:ring-green-500',
+                    name: "merge_transactions_form[merges][][merge_or_ignore]",
+                  },
+                  label: false,
+                )
+                = text_field_tag(\
+                  "merge_transactions_form[merges][][merge_into_id]",
+                  suggested_merge.id,
+                  class: 'hidden',
+                )
+                = text_field_tag(\
+                  "merge_transactions_form[merges][][merge_id]",
+                  suggested_merge.matched_id,
+                  class: 'hidden',
+                )
+              td.text-sm.px-3.py-1 = suggested_merge.date.iso8601
+              td.text-sm.px-3.py-1 = suggested_merge.account_debited.name
+              td.text-sm.px-3.py-1 = suggested_merge.account_credited.name
+              td.text-sm.px-3.py-1 = suggested_merge.amount
+              td.text-sm.px-3.py-1 = suggested_merge.note
+              td.text-sm.pl-3.pr-4.py-1 = suggested_merge.memo
+            tr
+              td
+              td.text-sm.px-3.pb-6 = suggested_merge.matched_date.iso8601
+              td.text-sm.px-3.pb-6 = suggested_merge.account_debited.name
+              td.text-sm.px-3.pb-6 = suggested_merge.account_credited.name
+              td.text-sm.px-3.pb-6 = suggested_merge.amount
+              td.text-sm.px-3.pb-6 = suggested_merge.matched_note
+              td.text-sm.px-3.pb-6 = suggested_merge.matched_memo
