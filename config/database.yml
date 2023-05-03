@@ -24,7 +24,7 @@ default: &default
 development:
   <<: *default
   database: expense_tracker_development
-  username: deploy
+  username: postgres
   password: <%= ENV.fetch('EXPENSE_TRACKER_DATABASE_PASSWORD') %>
 
   # Connect on a TCP socket. Omitted by default since the client uses a
@@ -75,5 +75,5 @@ test:
 production:
   <<: *default
   database: expense_tracker_production
-  username: deploy
+  username: postgres
   password: <%= ENV.fetch('EXPENSE_TRACKER_DATABASE_PASSWORD') %>
