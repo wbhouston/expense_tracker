@@ -53,6 +53,12 @@ div.p-8
           td.text-sm.px-3.py-1 title="#{transaction.memo}" = transaction.memo&.truncate(30)
           td.text-sm.pl-3.pr-4.py-1.flex.gap-x-4
             = link_to(\
+              'Edit',
+              edit_transaction_path(transaction.id),
+              class: 'text-green-700 hover:text-green-900',
+            )
+
+            = link_to(\
               'Delete',
               transaction_path(transaction.id),
               class: 'text-red-700 hover:text-red-900',

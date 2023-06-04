@@ -19,6 +19,20 @@ class TransactionsController < ApplicationController
     end
   end
 
+  def edit
+    @transaction = Transaction.find(params.fetch(:id))
+  end
+
+  def update
+    @transaction = Transaction.find(params.fetch(:id))
+
+    if @transaction.update(allowed_params)
+      redirect_to transactions_path, notice: 'Successfully updated the transaction'
+    else
+      render :edit
+    end
+  end
+
   def destroy
     @transaction = Transaction.find(params.fetch(:id))
 
