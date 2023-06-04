@@ -5,6 +5,20 @@ class TransactionsController < ApplicationController
     @transactions = load_transactions
   end
 
+  def new
+    @transaction = Transaction.new
+  end
+
+  def create
+    @transaction = Transaction.new(allowed_params)
+
+    if @transaction.save
+      redirect_to transactions_path
+    else
+      render :new
+    end
+  end
+
   def destroy
     @transaction = Transaction.find(params.fetch(:id))
 
@@ -19,6 +33,18 @@ class TransactionsController < ApplicationController
 
   def account_search_param
     params.fetch(:search, {}).fetch(:account_id, nil)
+  end
+
+  def allowed_params
+    params.require(:transaction).permit(
+      :account_credited_id,
+      :account_debited_id,
+      :amount,
+      :date,
+      :memo,
+      :note,
+      :percent_shared,
+    )
   end
 
   def load_transactions

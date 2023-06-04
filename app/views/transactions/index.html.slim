@@ -2,6 +2,13 @@ div.p-8
   h2 Transactions
 
   div.mt-8
+    = link_to(\
+      'New Transaction',
+      new_transaction_path,
+      class: 'text-sm bg-green-700 text-white px-2 py-1 rounded hover:bg-green-500 hover:cursor-pointer',
+    )
+
+  div.mt-4
     = simple_form_for(\
       :search,
       method: :get,
