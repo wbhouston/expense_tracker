@@ -44,7 +44,7 @@ class TransactionImportRowPresenter
                         0
                     end
 
-    BigDecimal(amount_string).round(2)
+    parse_amount(amount_string)
   end
 
   def date
@@ -63,6 +63,15 @@ class TransactionImportRowPresenter
 
   def importing_account
     @importing_account ||= Account.find(transaction_import.importing_account)
+  end
+
+  def parse_amount(amount_string)
+    amount_string.gsub!('$', '')
+    parenthesis_as_neg = Regexp.new(/\((\d*\.?\d*)\)/)
+    if parenthesis_as_neg.match?(amount_string)
+      amount_string = '-' + parenthesis_as_neg.match(amount_string)[1]
+    end
+    BigDecimal(amount_string).round(2)
   end
 
   def parse_date(date:)
