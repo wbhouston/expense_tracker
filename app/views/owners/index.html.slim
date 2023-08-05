@@ -1,0 +1,38 @@
+div.p-8
+  h2 Owners
+
+  div.mt-8
+    = link_to(\
+      'New Owner',
+      new_owner_path,
+      class: 'text-sm bg-green-700 text-white px-2 py-1 rounded hover:bg-green-500 hover:cursor-pointer',
+    )
+
+  table.mt-8
+    thead.bg-gray-50.border-b.border-gray-200
+      tr
+        th.text-sm.font-semibold.py-2.pl-4.pr-3 Name
+        th.text-sm.font-semibold.py-2.pl-4.pr-3 Default Ownership Percent
+        th.text-sm.font-semibold.py-2.pl-3.pr-4 Actions
+
+    tbody
+      - @owners.each do |owner|
+        tr class='even:bg-gray-50'
+          td.text-sm.px-3.py-1 = owner.name
+          td.text-sm.px-3.py-1 = owner.default_ownership_percent
+          td.text-sm.pl-3.pr-4.py-1.flex.gap-x-4
+            = link_to(\
+              'Edit',
+              edit_owner_path(owner.id),
+              class: 'text-green-700 hover:text-green-900',
+            )
+
+            = link_to(\
+              'Delete',
+              owner_path(owner.id),
+              class: 'text-red-700 hover:text-red-900',
+              data: { confirm: 'Are you sure?' },
+              method: :delete,
+            )
+
+  = paginate @owners

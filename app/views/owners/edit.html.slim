@@ -1,0 +1,22 @@
+div.p-8
+  h2 Update Owner
+
+  div.mt-8
+    = simple_form_for(@owner) do |form|
+      div.max-w-160.space-y-8
+        = form.input(\
+          :name,
+          input_html: { class: 'px-1 py-1.5 border border-gray-300 rounded' },
+          wrapper: :expense_input,
+        )
+
+        = form.input(\
+          :default_ownership_percent,
+          input_html: { class: 'px-1 py-1.5 border border-gray-300 rounded' },
+          wrapper: :expense_input,
+        )
+
+        = form.submit(\
+          'Update Owner',
+          class: 'bg-green-700 text-white px-2 py-1 rounded hover:bg-green-500 hover:cursor-pointer',
+        )

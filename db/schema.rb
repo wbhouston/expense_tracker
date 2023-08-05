@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_20_182728) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_08_222034) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,6 +50,26 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_20_182728) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "other_party_accounts", force: :cascade do |t|
+    t.bigint "other_party_id", null: false
+    t.bigint "account_id", null: false
+    t.index ["account_id"], name: "index_other_party_accounts_on_account_id"
+    t.index ["other_party_id"], name: "index_other_party_accounts_on_other_party_id"
+  end
+
+  create_table "owner_accounts", force: :cascade do |t|
+    t.bigint "owner_id", null: false
+    t.bigint "account_id", null: false
+    t.decimal "ownership_percent", precision: 4, scale: 2, null: false
+    t.index ["account_id"], name: "index_owner_accounts_on_account_id"
+    t.index ["owner_id"], name: "index_owner_accounts_on_owner_id"
+  end
+
+  create_table "owners", force: :cascade do |t|
+    t.string "name"
+    t.decimal "default_ownership_percent", precision: 4, scale: 2, null: false
+  end
+
   create_table "transaction_imports", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -75,6 +95,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_20_182728) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "other_party_accounts", "accounts"
+  add_foreign_key "other_party_accounts", "owners", column: "other_party_id"
+  add_foreign_key "owner_accounts", "accounts"
+  add_foreign_key "owner_accounts", "owners"
   add_foreign_key "transactions", "accounts", column: "account_credited_id"
   add_foreign_key "transactions", "accounts", column: "account_debited_id"
   add_foreign_key "transactions", "transactions", column: "parent_id"

@@ -110,5 +110,23 @@ body.h-full
                 class_active: 'bg-gray-100',
               )
 
+          - sharing_controllers = ['owners']
+          = content_tag(\
+            :details,
+            aria_controls: 'sub-menu-4',
+            aria_expanded: is_active_link?(request.path, [sharing_controllers]),
+            class: 'bg-white text-gray-600 group w-full flex items-center',
+            open: is_active_link?(request.path, [sharing_controllers]),
+          ) do
+            summary class='hover:bg-gray-50 hover:text-gray-900 px-2 py-2 text-left text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 before:ml-2' Sharing
+
+            div class='space-y-1 mt-1' id='sub-menu-1'
+              = active_link_to(\
+                'Owners',
+                owners_path,
+                class: 'group flex w-full items-center rounded-md py-2 pl-10 pr-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+                class_active: 'bg-gray-100',
+              )
+
   div class='flex flex-col lg:pl-64'
     = yield
