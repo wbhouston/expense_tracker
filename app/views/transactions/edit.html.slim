@@ -1,20 +1,27 @@
 div.p-8
   h2 Edit Transaction
 
-  div.mt-8
-    = simple_form_for(@transaction) do |form|
-      div.max-w-160
-        div.grid.grid-cols-2.gap-y-4
-          div Date
-          div
-            = form.input(\
-              :date,
-              as: :date,
-              html5: true,
-              label: false,
-            )
+  div.mt-8.bg-gray-50.border-b.border-gray-200.grid.grid-cols-7.min-w-full
+    div.text-sm.font-semibold.py-2.pl-4.pr-3 Date
+    div.text-sm.font-semibold.py-2.px-3 Account Debited
+    div.text-sm.font-semibold.py-2.px-3 Account Credited
+    div.text-sm.font-semibold.py-2.px-3 Amount
+    div.text-sm.font-semibold.py-2.px-3 Memo
+    div.text-sm.font-semibold.py-2.px-3 Note
+    div.text-sm.font-semibold.py-2.pl-3.pr-4 Actions
 
-          div Account Debited
+  = turbo_frame_tag "transaction_#{@transaction.id}" do
+    = simple_form_for(@transaction) do |form|
+      div class='even:bg-gray-50 grid grid-cols-7 min-w-full'
+        div class='text-sm pl-4 pr-3 py-1'
+          = form.input(\
+            :date,
+            as: :date,
+            html5: true,
+            label: false,
+          )
+
+        div.text-sm.px-3.py-1
           = form.input(\
             :account_debited_id,
             as: :select,
@@ -25,7 +32,7 @@ div.p-8
             label: false,
           )
 
-          div Account Credited
+        div.text-sm.px-3.py-1
           = form.input(\
             :account_credited_id,
             as: :select,
@@ -36,32 +43,25 @@ div.p-8
             label: false,
           )
 
-          div Amount
+        div.text-sm.px-3.py-1
           = form.input(\
             :amount,
             label: false,
           )
 
-          div Percent Shared
-          = form.input(\
-            :percent_shared,
-            label: false,
-          )
-
-          div Memo
+        div.text-sm.px-3.py-1
           = form.input(\
             :memo,
             label: false,
           )
 
-          div Note
+        div.text-sm.px-3.py-1
           = form.input(\
             :note,
             label: false,
           )
 
-          div
-            = form.submit(\
-              'Create Transaction',
-              class: 'bg-green-700 text-white px-2 py-1 rounded hover:bg-green-500 hover:cursor-pointer',
-            )
+        div.text-sm.pl-3.pr-4.py-1.flex.gap-x-4
+          = form.submit(\
+            class: 'bg-green-700 text-white px-2 py-1 rounded hover:bg-green-500 hover:cursor-pointer',
+          )

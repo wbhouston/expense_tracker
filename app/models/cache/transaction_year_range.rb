@@ -6,6 +6,12 @@ module Cache
 
     attr_reader :id
 
+    def self.bust_cache
+      singleton = new
+      singleton.max_transaction_year_value.delete
+      singleton.min_transaction_year_value.delete
+    end
+
     def initialize
       @id = "#{self.class.name}-id"
     end

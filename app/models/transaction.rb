@@ -11,10 +11,24 @@ class Transaction < ApplicationRecord
     foreign_key: :parent_id,
   )
 
+  has_many(
+    :split_transactions,
+    -> { split_transactions },
+    class_name: Transaction.name,
+    foreign_key: :parent_id,
+  )
+
   validates(:date, :amount, presence: true)
+
+  accepts_nested_attributes_for(
+    :split_transactions,
+    allow_destroy: true,
+    reject_if: :missing_required_split_fields
+  )
 
   scope :active, -> { where(arel_active) }
   scope :base_transactions, -> { where(type: nil) }
+  scope :split_transactions, -> { where(type: ::SplitTransaction.name) }
 
   scope :with_account_id, -> (account_id) do
     where(
@@ -29,6 +43,10 @@ class Transaction < ApplicationRecord
 
   def self.arel_active
     arel_table[:status].eq('active')
+  end
+
+  def self.arel_split
+    arel_table[:status].eq('split')
   end
 
   def self.arel_account_credited
@@ -63,5 +81,21 @@ class Transaction < ApplicationRecord
 
   def active?
     status == 'active'
+  end
+
+  def split?
+    status == 'split'
+  end
+
+  private
+
+  def missing_required_split_fields(transaction_attributes)
+    transaction_attributes = transaction_attributes.with_indifferent_access
+    [
+      :account_credited_id,
+      :account_debited_id,
+      :amount,
+      :date,
+    ].all? { |attr| transaction_attributes[attr].blank? }
   end
 end

@@ -62,7 +62,7 @@ class TransactionsController < ApplicationController
   end
 
   def load_transactions
-    transactions = Transaction.active
+    transactions = Transaction.base_transactions.where(status: [:active, :split])
     if account_search_param.present?
       transactions = transactions.with_account_id(account_search_param)
     end

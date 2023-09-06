@@ -1,0 +1,32 @@
+div.p-8
+  h2 Split Transaction
+
+  = render('split_transactions/table_header')
+  = turbo_frame_tag "transaction_#{@form_object.parent_transaction.id}" do
+    = simple_form_for(\
+      @form_object,
+      method: :post,
+      url: split_transactions_path(parent_id: @form_object.parent_transaction.id),
+    ) do |form|
+      div data-controller='split-transactions'
+        = render('split_transactions/parent_transaction', form: form)
+
+        div.pl-16.py-6.pr-6.bg-green-100
+          div.bg-white.p-2
+            div data-split-transactions-target='splitTransactionsTable'
+              - form.object.split_transactions.each do |split_transaction|
+                = render('split_transactions/transaction_row', form: form, split_transaction: split_transaction)
+
+            div class='mt-8 min-w-full grid grid-cols-7'
+              div
+              div
+              div.text-sm.text-right.px-3.py-1 Total:
+              div.text-sm.px-3.py-1.col-span-3 data-split-transactions-target='amountTotal'
+              div
+                = form.submit(\
+                  'Submit',
+                  class:'text-sm bg-green-700 text-white px-2 py-1 rounded hover:bg-green-500 hover:cursor-pointer',
+                )
+
+            template data-split-transactions-target='rowTemplate'
+              = render('split_transactions/transaction_row', form: form, split_transaction: Transaction.new)

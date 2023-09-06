@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :merge_transactions, only: [:new, :create]
   resources :transaction_imports, only: [:index, :new, :create, :edit, :update]
   resources :transactions, only: [:index, :new, :create, :edit, :update, :destroy]
+  resources :split_transactions, only: [:show, :new, :create]
   resources :unmatched_transactions, only: [:edit, :update]
 
   namespace :reports do

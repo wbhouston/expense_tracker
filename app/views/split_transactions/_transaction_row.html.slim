@@ -1,0 +1,98 @@
+= form.fields_for(split_transaction) do |split_transaction_form|
+  - field_prefix = "split_transaction_form[split_transactions_attributes][]"
+  div class='min-w-full grid grid-cols-7 even:bg-gray-50 js-split-transaction-row'
+    div class='text-sm pl-4 pr-3 py-1'
+      = split_transaction_form.input(\
+        :id,
+        as: :hidden,
+        input_html: { name: "#{field_prefix}[id]" },
+      )
+
+      = split_transaction_form.input(\
+        :type,
+        as: :hidden,
+        input_html: {\
+          name: "#{field_prefix}[type]",
+          value: ::SplitTransaction.name,
+        },
+      )
+
+      = split_transaction_form.input(\
+        :date,
+        as: :date,
+        html5: true,
+        input_html: { name: "#{field_prefix}[date]" },
+        label: false,
+      )
+
+    div.text-sm.px-3.py-1
+      = split_transaction_form.input(\
+        :account_debited_id,
+        as: :select,
+        collection: Account.all.order_by_number,
+        input_html: {\
+          class: 'p-0.5 bg-gray-100 border border-gray-300 rounded focus:ring-2 focus:ring-green-500',
+          name: "#{field_prefix}[account_debited_id]",
+        },
+        label: false,
+      )
+
+    div.text-sm.px-3.py-1
+      = split_transaction_form.input(\
+        :account_credited_id,
+        as: :select,
+        collection: Account.all.order_by_number,
+        input_html: {\
+          class: 'p-0.5 bg-gray-100 border border-gray-300 rounded focus:ring-2 focus:ring-green-500',
+          name: "#{field_prefix}[account_credited_id]",
+        },
+        label: false,
+      )
+
+    div.text-sm.px-3.py-1
+      = split_transaction_form.input(\
+        :amount,
+        input_html: {\
+          name: "#{field_prefix}[amount]",
+          data: {\
+            action: 'split-transactions#update_total',
+            split_transactions_target: 'splitTransactionAmount',
+          },
+        },
+        label: false,
+      )
+
+    div.text-sm.px-3.py-1
+      = split_transaction_form.input(\
+        :memo,
+        input_html: { name: "#{field_prefix}[memo]" },
+        label: false,
+      )
+
+    div.text-sm.px-3.py-1
+      = split_transaction_form.input(\
+        :note,
+        input_html: { name: "#{field_prefix}[note]" },
+        label: false,
+      )
+
+    div.px-3.py-1.flex.gap-4
+      button class='text-sm bg-green-700 text-white px-2 py-1 rounded hover:bg-green-500 hover:cursor-pointer' data-action='split-transactions#new_line'
+        ' Add
+
+      button[\
+        class='text-sm bg-red-700 text-white px-2 py-1 rounded hover:bg-red-500 hover:cursor-pointer'
+        data-action='split-transactions#remove_line'
+        data-transaction-id='#{split_transaction.id}'
+      ]
+        ' Remove
+
+      = check_box_tag(\
+        "#{field_prefix}[_destroy]",
+        '1',
+        false,
+        data: {\
+          split_transactions_target: 'splitTransactionDestroy',
+          transaction_id: split_transaction.id,
+        },
+      )

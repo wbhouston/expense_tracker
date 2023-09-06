@@ -1,0 +1,20 @@
+div.p-8
+  h2 Split Transaction
+
+  = render('split_transactions/table_header')
+  = turbo_frame_tag "transaction_#{@parent_transaction.id}" do
+    = render('split_transactions/transaction_view', transaction: @parent_transaction)
+
+    div.pl-16.py-6.pr-6.bg-green-100
+      div.bg-white
+        - @parent_transaction.split_transactions.each do |transaction|
+          = render('split_transactions/transaction_view', transaction: transaction)
+
+        div class='min-w-full grid grid-cols-7'
+          div
+          div
+          div.text-sm.text-right.px-3.py-1 Total:
+          div.text-sm.px-3.py-1 = number_to_currency(@parent_transaction.amount)
+          div
+          div
+          div

@@ -33,37 +33,27 @@ div.p-8
           class: 'text-sm bg-green-700 text-white px-2 py-1 rounded hover:bg-green-500 hover:cursor-pointer',
         )
 
-  table.mt-8.min-w-full
-    thead.bg-gray-50.border-b.border-gray-200
-      tr
-        th.text-sm.font-semibold.py-2.pl-4.pr-3 Date
-        th.text-sm.font-semibold.py-2.px-3 Account Debited
-        th.text-sm.font-semibold.py-2.px-3 Account Credited
-        th.text-sm.font-semibold.py-2.px-3 Amount
-        th.text-sm.font-semibold.py-2.px-3 Memo
-        th.text-sm.font-semibold.py-2.pl-3.pr-4 Actions
+  div.mt-8.min-w-full.grid.grid-cols-7.bg-gray-50.border-b.border-gray-200
+    div.text-sm.font-semibold.py-2.pl-4.pr-3 Date
+    div.text-sm.font-semibold.py-2.px-3 Account Debited
+    div.text-sm.font-semibold.py-2.px-3 Account Credited
+    div.text-sm.font-semibold.py-2.px-3 Amount
+    div.text-sm.font-semibold.py-2.px-3 Memo
+    div.text-sm.font-semibold.py-2.px-3 Note
+    div.text-sm.font-semibold.py-2.pl-3.pr-4 Actions
 
-    tbody
-      - @transactions.each do |transaction|
-        tr class='even:bg-gray-50'
-          td class='text-sm pl-4 pr-3 py-1' = transaction.date.iso8601
-          td.text-sm.px-3.py-1 = transaction.account_debited&.name
-          td.text-sm.px-3.py-1 = transaction.account_credited&.name
-          td.text-sm.px-3.py-1 = number_to_currency(transaction.amount)
-          td.text-sm.px-3.py-1 title="#{transaction.memo}" = transaction.memo&.truncate(30)
-          td.text-sm.pl-3.pr-4.py-1.flex.gap-x-4
-            = link_to(\
-              'Edit',
-              edit_transaction_path(transaction.id),
-              class: 'text-green-700 hover:text-green-900',
-            )
-
-            = link_to(\
-              'Delete',
-              transaction_path(transaction.id),
-              class: 'text-red-700 hover:text-red-900',
-              data: { confirm: 'Are you sure?' },
-              method: :delete,
-            )
+  - @transactions.each do |transaction|
+    - transaction_view = ::TransactionViewObject.new(transaction: transaction, view_context: self)
+    = turbo_frame_tag "transaction_#{transaction_view.id}" do
+      div class='min-w-full grid grid-cols-7 even:bg-gray-50'
+        div class='text-sm pl-4 pr-3 py-1' = transaction_view.date.iso8601
+        = transaction_view.account_columns
+        div.text-sm.px-3.py-1 = transaction_view.amount
+        div.text-sm.px-3.py-1 title="#{transaction_view.memo}"
+          = transaction_view.memo&.truncate(30)
+        div.text-sm.px-3.py-1 title="#{transaction_view.note}"
+          = transaction_view.note&.truncate(30)
+        div.text-sm.pl-3.pr-4.py-1.flex.gap-x-4
+          = transaction_view.actions
 
   = paginate @transactions

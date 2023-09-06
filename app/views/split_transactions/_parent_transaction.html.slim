@@ -1,0 +1,14 @@
+div class='mb-4 min-w-full grid grid-cols-7'
+  div.hidden = form.input(:parent_id, as: :hidden)
+  div class='text-sm pl-4 pr-3 py-1' = form.object.parent_transaction.date.iso8601
+  div.text-sm.px-3.py-1 = form.object.parent_transaction.account_debited&.name
+  div.text-sm.px-3.py-1 = form.object.parent_transaction.account_credited&.name
+  div.text-sm.px-3.py-1 data-split-transactions-target='parentAmount'
+    = number_to_currency(form.object.parent_transaction.amount)
+  div.text-sm.px-3.py-1 title="#{form.object.parent_transaction.memo}"
+    = form.object.parent_transaction.memo&.truncate(30)
+  div.text-sm.px-3.py-1 title="#{form.object.parent_transaction.note}"
+    = form.object.parent_transaction.note&.truncate(30)
+  div.text-sm.pl-3.pr-4.py-1.flex.gap-x-4
+    button class='text-sm bg-green-700 text-white px-2 py-1 rounded hover:bg-green-500 hover:cursor-pointer' data-action='split-transactions#new_line'
+      ' Add
