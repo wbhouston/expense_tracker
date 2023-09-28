@@ -27,7 +27,10 @@ class TransactionsController < ApplicationController
     @transaction = Transaction.find(params.fetch(:id))
 
     if @transaction.update(allowed_params)
-      redirect_to transactions_path, notice: 'Successfully updated the transaction'
+      redirect_to(
+        transactions_path(page: params.fetch(:page, nil)),
+        notice: 'Successfully updated the transaction',
+      )
     else
       render :edit
     end
@@ -66,6 +69,6 @@ class TransactionsController < ApplicationController
     if account_search_param.present?
       transactions = transactions.with_account_id(account_search_param)
     end
-    transactions.reorder(date: :desc).page(params.fetch(:page, nil))
+    transactions.reorder(date: :desc, id: :desc).page(params.fetch(:page, nil)).per(50)
   end
 end

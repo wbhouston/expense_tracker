@@ -19,7 +19,7 @@ class SplitTransactionsController < ApplicationController
     )
 
     if @form_object.save
-      redirect_to transactions_path
+      redirect_to transactions_path(page: params.fetch(:page, nil))
     else
       render :new, status: 422
     end

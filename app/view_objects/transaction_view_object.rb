@@ -19,9 +19,12 @@ class TransactionViewObject
   def account_columns
     if transaction.split?
       row(additional_classes: 'col-span-2') {
-        view_context.link_to(\
+        view_context.link_to(
           'view split details',
-          view_context.split_transaction_path(transaction.id),
+          view_context.split_transaction_path(
+            transaction.id,
+            page: view_context.params.fetch(:page, nil)
+          ),
           class: 'col-span-2 items-center text-sm text-green-700 hover:text-green-900',
         )
       }
@@ -59,7 +62,10 @@ class TransactionViewObject
   def edit_action
     view_context.link_to(
       'Edit',
-      view_context.edit_transaction_path(id),
+      view_context.edit_transaction_path(
+        id,
+        page: view_context.params.fetch(:page, nil),
+      ),
       class: 'text-green-700 hover:text-green-900',
     )
   end
@@ -67,7 +73,10 @@ class TransactionViewObject
   def edit_split_action
     view_context.link_to(
       'Edit Split',
-      view_context.new_split_transaction_path(parent_id: id),
+      view_context.new_split_transaction_path(
+        page: view_context.params.fetch(:page, nil),
+        parent_id: id,
+      ),
       class: 'text-green-700 hover:text-green-900',
     )
   end
@@ -75,9 +84,11 @@ class TransactionViewObject
   def split_action
     view_context.link_to(
       'Split',
-      view_context.new_split_transaction_path(parent_id: id),
+      view_context.new_split_transaction_path(
+        page: view_context.params.fetch(:page, nil),
+        parent_id: id,
+      ),
       class: 'text-green-700 hover:text-green-900',
-      target: :_top,
     )
   end
 

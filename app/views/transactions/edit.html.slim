@@ -11,7 +11,14 @@ div.p-8
     div.text-sm.font-semibold.py-2.pl-3.pr-4 Actions
 
   = turbo_frame_tag "transaction_#{@transaction.id}" do
-    = simple_form_for(@transaction) do |form|
+    = simple_form_for(\
+      @transaction,
+      method: :patch,
+      url: transaction_path(\
+        @transaction,
+        page: params[:page],
+      ),
+    ) do |form|
       div class='even:bg-gray-50 grid grid-cols-7 min-w-full'
         div class='text-sm pl-4 pr-3 py-1'
           = form.input(\
@@ -64,4 +71,10 @@ div.p-8
         div.text-sm.pl-3.pr-4.py-1.flex.gap-x-4
           = form.submit(\
             class: 'bg-green-700 text-white px-2 py-1 rounded hover:bg-green-500 hover:cursor-pointer',
+          )
+
+          = link_to(\
+            'Cancel',
+            transactions_path(page: params.fetch(:page, nil)),
+            class: 'col-span-2 items-center text-sm text-green-700 hover:text-green-900',
           )

@@ -6,7 +6,10 @@ div.p-8
     = simple_form_for(\
       @form_object,
       method: :post,
-      url: split_transactions_path(parent_id: @form_object.parent_transaction.id),
+      url: split_transactions_path(\
+        page: params.fetch(:page, nil),
+        parent_id: @form_object.parent_transaction.id,
+      ),
     ) do |form|
       div data-controller='split-transactions'
         = render('split_transactions/parent_transaction', form: form)
@@ -22,10 +25,16 @@ div.p-8
               div
               div.text-sm.text-right.px-3.py-1 Total:
               div.text-sm.px-3.py-1.col-span-3 data-split-transactions-target='amountTotal'
-              div
+              div.space-x-4
                 = form.submit(\
                   'Submit',
                   class:'text-sm bg-green-700 text-white px-2 py-1 rounded hover:bg-green-500 hover:cursor-pointer',
+                )
+
+                = link_to(\
+                  'Cancel',
+                  transactions_path(page: params.fetch(:page, nil)),
+                  class: 'col-span-2 items-center text-sm text-green-700 hover:text-green-900',
                 )
 
             template data-split-transactions-target='rowTemplate'

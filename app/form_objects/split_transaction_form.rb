@@ -8,9 +8,11 @@ class SplitTransactionForm
   def initialize(parent_id:, split_transactions_attributes:)
     @parent_id = parent_id
     parent_transaction.status = 'split'
-    parent_transaction.assign_attributes(
-      split_transactions_attributes: split_transactions_attributes,
-    )
+    if split_transactions_attributes.present?
+      parent_transaction.assign_attributes(
+        split_transactions_attributes: split_transactions_attributes,
+      )
+    end
   end
 
   def parent_transaction

@@ -3,9 +3,10 @@ div.p-8
 
   = render('split_transactions/table_header')
   = turbo_frame_tag "transaction_#{@parent_transaction.id}" do
-    = render('split_transactions/transaction_view', transaction: @parent_transaction)
-
     div.pl-16.py-6.pr-6.bg-green-100
+      div.bg-white.border-b-4.border-gray-300
+        = render('split_transactions/transaction_view', transaction: @parent_transaction)
+
       div.bg-white
         - @parent_transaction.split_transactions.each do |transaction|
           = render('split_transactions/transaction_view', transaction: transaction)
@@ -17,4 +18,8 @@ div.p-8
           div.text-sm.px-3.py-1 = number_to_currency(@parent_transaction.amount)
           div
           div
-          div
+            = link_to(\
+              'hide split details',
+              transactions_path(page: params.fetch(:page, nil)),
+              class: 'col-span-2 items-center text-sm text-green-700 hover:text-green-900',
+            )
