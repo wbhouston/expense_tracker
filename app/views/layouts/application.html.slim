@@ -27,6 +27,14 @@ body.h-full
               class_active: 'bg-gray-100',
             )
 
+          div
+            = active_link_to(\
+              'Budget',
+              edit_budgets_path,
+              class: 'text-gray-900 group w-full flex items-center pl-7 pr-2 py-2 text-sm font-medium rounded-md',
+              class_active: 'bg-gray-100',
+            )
+
           - accounts_controllers = ['accounts', 'merge_accounts']
           = content_tag(\
             :details,

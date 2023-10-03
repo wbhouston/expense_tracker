@@ -4,7 +4,9 @@ module.exports = {
   content: [
     "./public/*.html",
     "./app/helpers/**/*.rb",
+    "./app/form_objects/**/*.rb",
     "./app/javascript/**/*.js",
+    "./app/lib/**/*.rb",
     "./app/views/**/*.{erb,haml,html,slim}",
     './config/initializers/simple_form.rb',
   ],

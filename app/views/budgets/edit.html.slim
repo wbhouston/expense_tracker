@@ -1,0 +1,57 @@
+div.p-8
+  h2 Budgeted Amounts
+
+  div.mt-8
+    = simple_form_for(\
+      @form_object,
+      method: :patch,
+      url: budgets_path,
+    ) do |form|
+      = form.submit(\
+        'Update Budgeted Amounts',
+        class: 'bg-green-700 text-white px-2 py-1 rounded hover:bg-green-500 hover:cursor-pointer',
+      )
+
+      table.w-full.mt-4
+        thead
+          tr.border-b-4.border-gray-400
+            th Account
+            - @form_object.years.each do |year|
+              th.text-right = year
+        tbody
+          - @form_object.expense_accounts.each do |account|
+            tr.border-b.border-gray-100
+              td = account.full_label
+              - @form_object.years.each do |year|
+                td.text-right
+                  - budgeted = @form_object.budgeted_amount(account.id, year)
+                  = form.fields_for(budgeted) do |budgeted_amount_form|
+                    - field_prefix = "budgeted_amounts_form[budgeted_amounts_attributes][]"
+                    = budgeted_amount_form.input(\
+                      :id,
+                      as: :hidden,
+                      input_html: {\
+                        name: "#{field_prefix}[id]",
+                      },
+                    )
+                    = budgeted_amount_form.input(\
+                      :account_id,
+                      as: :hidden,
+                      input_html: {\
+                        name: "#{field_prefix}[account_id]",
+                      },
+                    )
+                    = budgeted_amount_form.input(\
+                      :year,
+                      as: :hidden,
+                      input_html: {\
+                        name: "#{field_prefix}[year]",
+                      },
+                    )
+                    = budgeted_amount_form.input(\
+                      :amount,
+                      input_html: {\
+                        name: "#{field_prefix}[amount]",
+                      },
+                      label: false,
+                    )

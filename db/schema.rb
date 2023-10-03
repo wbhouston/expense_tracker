@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_20_182728) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_02_125358) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "account_owners", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "owner_id", null: false
+    t.decimal "percent_ownership", precision: 15, scale: 2, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_account_owners_on_account_id"
+    t.index ["owner_id"], name: "index_account_owners_on_owner_id"
+  end
 
   create_table "accounts", force: :cascade do |t|
     t.string "name", null: false
@@ -48,6 +58,21 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_20_182728) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "budgeted_amounts", force: :cascade do |t|
+    t.integer "year", null: false
+    t.decimal "amount", precision: 15, scale: 2, null: false
+    t.bigint "account_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_budgeted_amounts_on_account_id"
+  end
+
+  create_table "owners", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "transaction_imports", force: :cascade do |t|

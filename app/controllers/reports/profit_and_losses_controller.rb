@@ -3,7 +3,10 @@
 module Reports
   class ProfitAndLossesController < ApplicationController
     def index
-      @report = ::Reports::ProfitAndLosses.new(year: search_year)
+      @report = ::Reports::ProfitAndLosses.new(
+        view_context: view_context,
+        year: search_year
+      )
     end
 
     private

@@ -3,6 +3,8 @@ require 'sidekiq/web'
 Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
 
+  resource :budgets, only: [:edit, :update]
+
   resources :accounts, only: [:index, :new, :create, :edit, :update, :destroy]
   resources :merge_accounts, only: [:new, :create]
   resources :merge_transactions, only: [:new, :create]
