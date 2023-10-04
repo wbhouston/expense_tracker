@@ -1,4 +1,4 @@
-div.p-8
+div.p-8 data-controller='profit-and-losses'
   h2 Profits and Losses Report
 
   div.mt-8
@@ -24,6 +24,13 @@ div.p-8
           class: 'bg-green-700 text-white px-2 py-1 rounded hover:bg-green-500 hover:cursor-pointer',
         )
 
+  div.mt-8
+    button [\
+      class='text-sm bg-green-700 text-white px-2 py-1 rounded hover:bg-green-500 hover:cursor-pointer'
+      data-action='profit-and-losses#toggle_budgeted_amounts'
+      data-hidden='true'
+    ]
+      ' Show Budgeted Amounts
   div.mt-8
     table.w-full
       thead

@@ -16,13 +16,21 @@ module Reports
       budgeted = monthly_budgeted_expense(account_id: account_id, month: month)
       bg_color = expense_bg_color(amount: amount, budgeted: budgeted)
 
-      view_context.content_tag(
+      amount_display = view_context.content_tag(
         :div,
         class: bg_color,
         title: over_under(amount: amount, budgeted: budgeted, month: month),
-      ) do
-        amount.zero? ? nil : view_context.number_to_currency(amount)
+      ) { amount.zero? ? nil : view_context.number_to_currency(amount) }
+
+      unless amount.zero?
+        amount_display = amount_display + view_context.content_tag(
+          :div,
+          class: "#{bg_color} text-xs hidden",
+          data: { profit_and_losses_target: 'budgetedAmount' },
+        ) { view_context.number_to_currency(budgeted) }
       end
+
+      amount_display
     end
 
     def monthly_expense_accounts
@@ -69,13 +77,21 @@ module Reports
       budgeted = yearly_budgeted_expense(account_id: account_id, month: month)
       bg_color = expense_bg_color(amount: amount_to_date, budgeted: budgeted)
 
-      view_context.content_tag(
+      amount_display = view_context.content_tag(
         :div,
         class: bg_color,
         title: over_under(amount: amount_to_date, budgeted: budgeted, month: month),
-      ) do
-        amount.zero? ? nil : view_context.number_to_currency(amount)
+      ) { amount.zero? ? nil : view_context.number_to_currency(amount) }
+
+      unless amount.zero?
+        amount_display = amount_display + view_context.content_tag(
+          :div,
+          class: "#{bg_color} text-xs hidden",
+          data: { profit_and_losses_target: 'budgetedAmount' },
+        ) { view_context.number_to_currency(budgeted) }
       end
+
+      amount_display
     end
 
     def yearly_expense_accounts
