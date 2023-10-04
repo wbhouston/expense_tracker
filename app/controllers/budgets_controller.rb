@@ -24,6 +24,7 @@ class BudgetsController < ApplicationController
       budgeted_amounts_attributes: [
         :account_id,
         :amount,
+        :frequency,
         :id,
         :year,
       ]

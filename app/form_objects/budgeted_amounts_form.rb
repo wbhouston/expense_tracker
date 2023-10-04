@@ -24,7 +24,10 @@ class BudgetedAmountsForm
           account_id: attrs['account_id'],
           year: attrs['year'],
         )
-        budgeted.update(amount: attrs['amount'].presence || 0)
+        budgeted.update(
+          amount: attrs['amount'].presence || 0,
+          frequency: attrs['frequency'] || :monthly,
+        )
       end
     end
   end

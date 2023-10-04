@@ -17,13 +17,13 @@ div.p-8
           tr.border-b-4.border-gray-400
             th Account
             - @form_object.years.each do |year|
-              th.text-right = year
+              th = year
         tbody
           - @form_object.expense_accounts.each do |account|
             tr.border-b.border-gray-100
               td = account.full_label
               - @form_object.years.each do |year|
-                td.text-right
+                td
                   - budgeted = @form_object.budgeted_amount(account.id, year)
                   = form.fields_for(budgeted) do |budgeted_amount_form|
                     - field_prefix = "budgeted_amounts_form[budgeted_amounts_attributes][]"
@@ -48,10 +48,23 @@ div.p-8
                         name: "#{field_prefix}[year]",
                       },
                     )
-                    = budgeted_amount_form.input(\
-                      :amount,
-                      input_html: {\
-                        name: "#{field_prefix}[amount]",
-                      },
-                      label: false,
-                    )
+                    div.flex
+                      = budgeted_amount_form.input(\
+                        :amount,
+                        input_html: {\
+                          name: "#{field_prefix}[amount]",
+                        },
+                        label: false,
+                        wrapper: :expense_input,
+                      )
+                      = budgeted_amount_form.input(\
+                        :frequency,
+                        as: :select,
+                        collection: [:monthly, :yearly],
+                        include_blank: false,
+                        input_html: {\
+                          name: "#{field_prefix}[frequency]",
+                        },
+                        label: false,
+                        wrapper: :expense_input,
+                      )

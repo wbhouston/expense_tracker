@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_02_125358) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_03_235058) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -66,6 +66,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_02_125358) do
     t.bigint "account_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "frequency", default: "monthly"
     t.index ["account_id"], name: "index_budgeted_amounts_on_account_id"
   end
 
