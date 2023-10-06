@@ -166,7 +166,10 @@ module Reports
     end
 
     def expense_bg_color(amount:, budgeted:)
-      if amount <= budgeted
+      difference = (budgeted - amount).abs
+      if difference < budgeted * 0.05
+        'bg-yellow-100'
+      elsif amount <= budgeted
         'bg-green-100'
       else
         'bg-red-100'
