@@ -10,7 +10,8 @@ class BudgetedAmountsForm
   end
 
   def budgeted_amount(account_id, year)
-    budgeted_amounts.find_or_initialize_by(account_id: account_id, year: year)
+    budgeted_amounts.find { |ba| ba.account_id == account_id && ba.year == year } ||
+      BudgetedAmount.new(account_id: account_id, year: year)
   end
 
   def expense_accounts
@@ -39,6 +40,6 @@ class BudgetedAmountsForm
   private
 
   def budgeted_amounts
-    @budgeted_amounts ||= BudgetedAmount.all
+    @budgeted_amounts ||= BudgetedAmount.all.to_a
   end
 end
