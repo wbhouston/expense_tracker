@@ -1,20 +1,21 @@
 div.p-8
-  h2 Transactions
+  h2.text-lg Transactions
 
   div.mt-8
     = link_to(\
       'New Transaction',
       new_transaction_path,
-      class: 'text-sm bg-green-700 text-white px-2 py-1 rounded hover:bg-green-500 hover:cursor-pointer',
+      class: 'btn-primary',
     )
 
-  div.mt-4
+  div.mt-6
     = simple_form_for(\
       :search,
       method: :get,
       url: transactions_path,
     ) do |form|
       div.text-sm.mb-1.text-gray-700 Search for transactions by account
+
       div.flex.space-x-4
         = form.input(\
           :account_id,
@@ -30,7 +31,7 @@ div.p-8
 
         = form.submit(\
           'Search',
-          class: 'text-sm bg-green-700 text-white px-2 py-1 rounded hover:bg-green-500 hover:cursor-pointer',
+          class: 'btn-secondary',
         )
 
   div.mt-8.min-w-full.grid.grid-cols-7.bg-gray-50.border-b.border-gray-200

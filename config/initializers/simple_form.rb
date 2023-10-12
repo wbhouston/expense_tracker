@@ -20,9 +20,21 @@ SimpleForm.setup do |config|
     b.optional :autocomplete
     b.optional :readonly
 
-    b.wrapper tag: :div, class: 'flex flex-col space-y-1' do |outer|
-      outer.use :label, class: 'text-xs font-medium text-gray-700', error_class: 'text-red-700'
-      outer.use :input, autocomplete: 'off',  error_class: 'border-2 border-red-700'
+    b.wrapper tag: :div, class: 'space-y-1' do |outer|
+      outer.use :label, class: 'block text-xs leading-6 font-medium text-gray-700', error_class: 'text-red-700'
+      outer.use(
+        :input,
+        autocomplete: 'off',
+        class: [
+          'block w-full',
+          'rounded-sm border-0 py-1.5 px-1',
+          'text-gray-900',
+          'shadow-sm ring-1 ring-inset ring-gray-300',
+          'focus-ring-2 focus:ring-inset focus:ring-orange-800',
+          'sm: text-sm sm:leading-6',
+        ].join(' '),
+        error_class: 'border-2 border-red-700'
+      )
       outer.use :error, wrap_with: { tag: :p, class: 'text-sm text-red-700' }
       outer.use :hint, wrap_with: { tag: :p, class: 'text-sm text-gray-600' }
     end
