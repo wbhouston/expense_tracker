@@ -19,7 +19,10 @@ class SplitTransactionsController < ApplicationController
     )
 
     if @form_object.save
-      redirect_to transactions_path(page: params.fetch(:page, nil))
+      respond_to do |format|
+        format.html { redirect_to transactions_path(page: params.fetch(:page, nil)) }
+        format.turbo_stream { redirect_to transaction_path(@form_object.parent_transaction) }
+      end
     else
       render :new, status: 422
     end

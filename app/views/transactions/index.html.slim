@@ -44,17 +44,6 @@ div.p-8
     div.text-sm.font-semibold.py-2.pl-3.pr-4 Actions
 
   - @transactions.each do |transaction|
-    - transaction_view = ::TransactionViewObject.new(transaction: transaction, view_context: self)
-    = turbo_frame_tag "transaction_#{transaction_view.id}" do
-      div class='min-w-full grid grid-cols-7 even:bg-gray-50'
-        div class='text-sm pl-4 pr-3 py-1' = transaction_view.date.iso8601
-        = transaction_view.account_columns
-        div.text-sm.px-3.py-1 = transaction_view.amount
-        div.text-sm.px-3.py-1 title="#{transaction_view.memo}"
-          = transaction_view.memo&.truncate(30)
-        div.text-sm.px-3.py-1 title="#{transaction_view.note}"
-          = transaction_view.note&.truncate(30)
-        div.text-sm.pl-3.pr-4.py-1.flex.gap-x-4
-          = transaction_view.actions
+    = render('transactions/transaction_row', transaction: transaction)
 
   = paginate @transactions

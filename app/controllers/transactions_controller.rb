@@ -5,6 +5,10 @@ class TransactionsController < ApplicationController
     @transactions = load_transactions
   end
 
+  def show
+    @transaction = Transaction.find(params[:id])
+  end
+
   def new
     @transaction = Transaction.new
   end
@@ -27,10 +31,18 @@ class TransactionsController < ApplicationController
     @transaction = Transaction.find(params.fetch(:id))
 
     if @transaction.update(allowed_params)
-      redirect_to(
-        transactions_path(page: params.fetch(:page, nil)),
-        notice: 'Successfully updated the transaction',
-      )
+      respond_to do |format|
+        format.html do
+          redirect_to(
+            transactions_path(page: params.fetch(:page, nil)),
+            notice: 'Successfully updated the transaction',
+          )
+        end
+
+        format.turbo_stream do
+          redirect_to(transaction_path(@transaction))
+        end
+      end
     else
       render :edit
     end
