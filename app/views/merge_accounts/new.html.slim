@@ -13,7 +13,6 @@ div.p-8
         collection: @accounts,
         label_method: :full_label,
         input_html: {\
-          class: 'px-1 py-1.5 bg-gray-100 border border-gray-300 rounded focus:ring-2 focus:ring-green-500',
           value: form.object.merge_into_id,
         },
         wrapper: :expense_input,
@@ -46,8 +45,5 @@ div.p-8
       div.mt-8
         = form.submit(\
           'Submit',
-          class: [\
-            'bg-green-700 text-white text-sm px-2 py-1 rounded',
-            'hover:bg-green-500 hover:cursor-pointer',
-          ].join(' '),
+          class: 'button-primary',
         )

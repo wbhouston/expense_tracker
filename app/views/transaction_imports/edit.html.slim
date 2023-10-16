@@ -14,21 +14,18 @@
         = form.input(\
           :importing_account,
           collection: Account.all,
-          input_html: { class: 'rounded px-1 py-1.5' },
           wrapper: :expense_input,
         )
 
         = form.input(\
           :amount_mapping_type,
           collection: TransactionImport::IMPORTING_ACCOUNT_MAPPING_TYPES,
-          input_html: { class: 'rounded px-1 py-1.5' },
           wrapper: :expense_input,
         )
 
         = form.input(\
           :single_column_amount_mapping,
           collection: TransactionImport::IMPORTING_ACCOUNT_SINGLE_COLUMN_MAPPING,
-          input_html: { class: 'rounded px-1 py-1.5' },
           wrapper: :expense_input,
         )
 
@@ -48,10 +45,11 @@
                   collection: TransactionImport::IMPORTED_COLUMNS,
                   label: false,
                   input_html: {\
-                    class: 'rounded px-0.5 py-0.5',
+                    class: 'px-0.5 py-0.5',
                     name: 'transaction_import_process_form[column_mappings][]',
                   },
                   selected: form.object.column_mappings[i],
+                  wrapper: :expense_input,
                 )
 
           - form.object.previewed_rows.each do |row|
@@ -63,5 +61,5 @@
       .space-y-4.mt-8
         = form.submit(\
           'Process',
-          class: 'bg-green-700 text-white px-2 py-1 rounded hover:bg-green-500 hover:cursor-pointer',
+          class: 'button-primary',
         )

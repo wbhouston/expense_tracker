@@ -2,9 +2,10 @@ div.p-8
   h2 Transaction Imports
 
   div.mt-8
-    = button(\
+    = link_to(\
       'New Transaction Import',
       new_transaction_import_path,
+      class: 'button-primary',
     )
 
   div.mt-8.grid.grid-cols-3.gap-y-2
@@ -19,5 +20,5 @@ div.p-8
         = link_to(\
           'Process Import',
           edit_transaction_import_path(import),
-          class: 'text-green-700 hover:text-green-500',
+          class: 'button-primary',
         )

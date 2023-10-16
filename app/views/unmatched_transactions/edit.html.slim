@@ -11,7 +11,7 @@ div.p-8
     ) do |form|
       = form.submit(\
         'Update Transactions',
-        class: 'bg-green-700 text-white px-2 py-1 rounded hover:bg-green-500 hover:cursor-pointer',
+        class: 'button-primary',
       )
 
       table.min-w-full.mt-8
@@ -21,7 +21,6 @@ div.p-8
             th.text-right.text-sm.font-semibold.py-2.px-3 Debited
             th.text-right.text-sm.font-semibold.py-2.px-3 Credited
             th.text-right.text-sm.font-semibold.py-2.px-3 Amount
-            th.text-right.text-sm.font-semibold.py-2.px-3 Percent Shared
             th.text-sm.font-semibold.py-2.pl-3.pr-4 Note
         tbody
           - form.object.unmatched_transactions.each do |id, transaction|
@@ -38,6 +37,7 @@ div.p-8
                     name: "#{input_base_name}[id]",
                     value: transaction.id,
                   },
+                  wrapper: :expense_input,
                 )
                 = transaction.date
               td.text-right.pt-1.pb-6.px-3
@@ -60,10 +60,10 @@ div.p-8
                     label: false,
                     include_blank: true,
                     input_html: {\
-                      class: 'p-0.5 bg-gray-100 border border-gray-300 rounded focus:ring-2 focus:ring-green-500',
                       name: "#{input_base_name}[account_debited_id]",
                     },
                     selected: transaction.account_debited_id,
+                    wrapper: :expense_input,
                   )
               td.text-right.pt-1.pb-6.px-3
                 - if transaction.account_credited_id.present?
@@ -85,30 +85,20 @@ div.p-8
                     label: false,
                     include_blank: true,
                     input_html: {\
-                      class: 'p-0.5 bg-gray-100 border border-gray-300 rounded focus:ring-2 focus:ring-green-500',
                       name: "#{input_base_name}[account_credited_id]",
                     },
                     selected: transaction.account_credited_id,
+                    wrapper: :expense_input,
                   )
               td.text-right.pt-1.pb-6.px-3
                 = number_with_precision(transaction.amount, precision: 2)
-              td.text-right.pt-1.pb-6.px-3
-                = form.input(\
-                  :transactions,
-                  label: false,
-                  input_html: {\
-                    class: 'p-0.5 border border-gray-300 rounded text-right focus:ring-2 focus:ring-green-500',
-                    name: "#{input_base_name}[percent_shared]",
-                    value: transaction.percent_shared,
-                  },
-                )
               td.pt-1.pb-6.pl-3.pr-4
                 = form.input(\
                   :transactions,
                   label: false,
                   input_html: {\
-                    class: 'p-0.5 border border-gray-300 rounded focus:ring-2 focus:ring-green-500',
                     name: "#{input_base_name}[note]",
                     value: transaction.note,
                   },
+                  wrapper: :expense_input,
                 )

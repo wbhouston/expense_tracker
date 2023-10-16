@@ -2,27 +2,19 @@
   .space-y-4.mt-8.max-w-lg
     = form.input(\
       :name,
-      input_html: { class: 'px-1 py-1.5 border border-gray-300 rounded' },
       wrapper: :expense_input,
     )
     = form.input(\
       :number,
-      input_html: { class: 'px-1 py-1.5 border border-gray-300 rounded' },
       wrapper: :expense_input,
     )
 
     = form.input(\
       :account_type,
       collection: ::Account.types_for_collection,
-      input_html: {\
-        class: 'px-1 py-1.5 bg-gray-100 border border-gray-300 rounded focus:ring-2 focus:ring-green-500',
-      },
       wrapper: :expense_input,
     )
 
     = form.submit(\
-      class: [\
-        'bg-green-700 text-white text-sm px-2 py-1 rounded',
-        'hover:bg-green-500 hover:cursor-pointer',
-      ].join(' '),
+      class: 'button-primary',
     )

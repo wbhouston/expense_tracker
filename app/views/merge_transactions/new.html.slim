@@ -10,7 +10,7 @@ div.p-8
       div.mt-8
         = form.submit(\
           'Update Transactions',
-          class: 'bg-green-700 text-white px-2 py-1 rounded hover:bg-green-500 hover:cursor-pointer',
+          class: 'button-primary',
         )
 
       table.min-w-full.mt-8
@@ -33,10 +33,10 @@ div.p-8
                   collection: [['Ignore', :ignore], ['Merge', :merge]],
                   include_blank: true,
                   input_html: {\
-                    class: 'px-1 py-0.5 bg-gray-100 border border-gray-300 rounded focus:ring-2 focus:ring-green-500',
                     name: "merge_transactions_form[merges][][merge_or_ignore]",
                   },
                   label: false,
+                  wrapper: :expense_input,
                 )
                 = text_field_tag(\
                   "merge_transactions_form[merges][][merge_into_id]",

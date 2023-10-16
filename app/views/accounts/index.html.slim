@@ -2,9 +2,10 @@ div.p-8
   h2 Accounts
 
   div.mt-8
-    = button(\
+    = link_to(\
       'New Account',
       new_account_path,
+      class: 'button-primary',
     )
 
   table.min-w-fit.mt-8
@@ -19,16 +20,17 @@ div.p-8
           td.text-sm.pl-4.pr-3.py-1 = account.full_label
           td.text-sm.px-3.py-1 = account.account_type.titleize
           td.text-sm.pl-3.pr-4.py-1.flex.gap-x-4
-            = link_to(\
-              'Edit',
-              edit_account_path(account),
-              class: 'text-sm text-green-700 hover:text-green-500',
-            )
-
-            = link_to(\
-              'Delete',
-              account,
-              class: 'text-sm text-green-700 hover:text-green-500',
-              method: :delete,
-              data: { confirm: 'Are you sure?' },
+            = render_button_menu(\
+              links: [\
+                {\
+                  label: 'Edit',
+                  url: edit_account_path(account),
+                },
+                {\
+                  data: { confirm: 'Are you sure?' },
+                  label: 'Delete',
+                  method: :delete,
+                  url: account_path(account),
+                },
+              ],
             )

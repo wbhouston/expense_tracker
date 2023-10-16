@@ -13,7 +13,6 @@ div.p-8
           :year,
           as: :select,
           collection: ::Cache::TransactionYearRange.new.range,
-          input_html: { class: 'rounded px-1 py-1.5' },
           label: false,
           selected: params.fetch(:search, {}).fetch(:year, ::Cache::TransactionYearRange.new.max_transaction_year),
           wrapper: :expense_input,
@@ -21,7 +20,7 @@ div.p-8
 
         = form.submit(\
           'Search',
-          class: 'bg-green-700 text-white px-2 py-1 rounded hover:bg-green-500 hover:cursor-pointer',
+          class: 'button-primary',
         )
 
   div.mt-8

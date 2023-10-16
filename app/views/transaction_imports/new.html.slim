@@ -5,9 +5,6 @@
     .space-y-4.mt-8.max-w-md
       = form.input(\
         :name,
-        input_html: {\
-          class: 'rounded border border-gray-300',
-        },
         wrapper: :expense_input,
       )
 
@@ -20,5 +17,5 @@
 
       = form.submit(\
         'Create',
-        class: 'bg-green-700 text-white px-2 py-1 rounded hover:bg-green-500 hover:cursor-pointer',
+        class: 'button-primary',
       )
