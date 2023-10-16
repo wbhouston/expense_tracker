@@ -1,0 +1,45 @@
+- first_link = links.shift
+
+div.inline-flex.rounded-md.shadow-sm.js-components--button-menu--container data-controller='components--button-menu'
+  = render_button_menu_link(\
+    first_link.merge(\
+      class: 'relative inline-flex items-center rounded-l-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 whitespace-nowrap hover:bg-gray-50 focus:z-10',
+      type: :button,
+    ),
+  )
+
+  div.relative.-ml-px.block
+    button [
+      aria-expanded='true'
+      aria-haspopup='true'
+      class = 'relative inline-flex items-center rounded-r-md bg-white px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10'
+      data-action = 'components--button-menu#toggle'
+      id = 'option-menu-button'
+      type='button'
+    ]
+      span.sr-only
+        | Open options
+      svg.h-5.w-5 [viewbox='0 0 20 20' fill='currentColor' aria-hidden='true']
+        path [
+          fill-rule='evenodd'
+          d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z'
+          clip-rule='evenodd'
+        ]
+    = content_tag(\
+      :div,
+      aria_orientation: 'vertical',
+      aria_labelledby: 'option-menu-button',
+      class: 'hidden absolute right-0 z-10 -mr-1 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none',
+      data: { components__button_menu_target: 'menu' },
+      role: 'menu',
+      tabindex: '-1',
+    ) do
+      div.py-1 role='none'
+        - links.each do |link|
+          = render_button_menu_link(\
+            link.merge(\
+              class: 'text-gray-700 block px-4 py-2 text-sm whitespace-nowrap',
+              role: :menuitem,
+              tabindex: '-1',
+            ),
+          )

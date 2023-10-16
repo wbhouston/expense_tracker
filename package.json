@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "stimulus-use": "^0.52.0"
+  }
+}

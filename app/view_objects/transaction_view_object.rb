@@ -25,7 +25,7 @@ class TransactionViewObject
             transaction.id,
             page: view_context.params.fetch(:page, nil)
           ),
-          class: 'col-span-2 items-center text-sm text-green-700 hover:text-green-900',
+          class: 'col-span-2 items-center link-primary',
         )
       }
     else
@@ -36,9 +36,9 @@ class TransactionViewObject
 
   def actions
     if transaction.split?
-      edit_split_action + delete_action
+      view_context.render_button_menu(links: [edit_split_link, delete_action])
     else
-      edit_action + delete_action + split_action
+      view_context.render_button_menu(links: [edit_action, delete_action, split_action])
     end
   end
 
@@ -49,47 +49,43 @@ class TransactionViewObject
   private
 
   def delete_action
-    view_context.link_to(
-      'Delete',
-      view_context.transaction_path(id),
-      class: 'text-red-700 hover:text-red-900',
+    {
+      label: 'Delete',
       data: { confirm: 'Are you sure?' },
       method: :delete,
       target: :_top,
-    )
+      url: view_context.transaction_path(id),
+    }
   end
 
   def edit_action
-    view_context.link_to(
-      'Edit',
-      view_context.edit_transaction_path(
+    {
+      label: 'Edit',
+      url: view_context.edit_transaction_path(
         id,
         page: view_context.params.fetch(:page, nil),
       ),
-      class: 'text-green-700 hover:text-green-900',
-    )
+    }
   end
 
-  def edit_split_action
-    view_context.link_to(
-      'Edit Split',
-      view_context.new_split_transaction_path(
+  def edit_split_link
+    {
+      label: 'Edit Split',
+      url: view_context.new_split_transaction_path(
         page: view_context.params.fetch(:page, nil),
         parent_id: id,
       ),
-      class: 'text-green-700 hover:text-green-900',
-    )
+    }
   end
 
   def split_action
-    view_context.link_to(
-      'Split',
-      view_context.new_split_transaction_path(
+    {
+      label: 'Split',
+      url: view_context.new_split_transaction_path(
         page: view_context.params.fetch(:page, nil),
         parent_id: id,
       ),
-      class: 'text-green-700 hover:text-green-900',
-    )
+    }
   end
 
   def row(additional_classes: nil)

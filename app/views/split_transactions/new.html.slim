@@ -28,13 +28,13 @@ div.p-8
               div.space-x-4
                 = form.submit(\
                   'Submit',
-                  class:'text-sm bg-green-700 text-white px-2 py-1 rounded hover:bg-green-500 hover:cursor-pointer',
+                  class:'button-primary',
                 )
 
                 = link_to(\
                   'Cancel',
                   transactions_path(page: params.fetch(:page, nil)),
-                  class: 'col-span-2 items-center text-sm text-green-700 hover:text-green-900',
+                  class: 'link-cancel',
                 )
 
             template data-split-transactions-target='rowTemplate'

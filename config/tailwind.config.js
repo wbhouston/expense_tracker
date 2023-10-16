@@ -8,6 +8,7 @@ module.exports = {
     "./app/javascript/**/*.js",
     "./app/lib/**/*.rb",
     "./app/views/**/*.{erb,haml,html,slim}",
+    "./app/view_objects/**/*.rb",
     './config/initializers/simple_form.rb',
   ],
   theme: {

@@ -23,6 +23,7 @@
         html5: true,
         input_html: { name: "#{field_prefix}[date]" },
         label: false,
+        wrapper: :expense_input,
       )
 
     div.text-sm.px-3.py-1
@@ -35,6 +36,7 @@
           name: "#{field_prefix}[account_debited_id]",
         },
         label: false,
+        wrapper: :expense_input,
       )
 
     div.text-sm.px-3.py-1
@@ -47,6 +49,7 @@
           name: "#{field_prefix}[account_credited_id]",
         },
         label: false,
+        wrapper: :expense_input,
       )
 
     div.text-sm.px-3.py-1
@@ -60,6 +63,7 @@
           },
         },
         label: false,
+        wrapper: :expense_input,
       )
 
     div.text-sm.px-3.py-1
@@ -67,6 +71,7 @@
         :memo,
         input_html: { name: "#{field_prefix}[memo]" },
         label: false,
+        wrapper: :expense_input,
       )
 
     div.text-sm.px-3.py-1
@@ -74,14 +79,15 @@
         :note,
         input_html: { name: "#{field_prefix}[note]" },
         label: false,
+        wrapper: :expense_input,
       )
 
     div.px-3.py-1.flex.gap-4
-      button class='text-sm bg-green-700 text-white px-2 py-1 rounded hover:bg-green-500 hover:cursor-pointer' data-action='split-transactions#new_line'
+      button.button-primary data-action='split-transactions#new_line'
         ' Add
 
       button[\
-        class='text-sm bg-red-700 text-white px-2 py-1 rounded hover:bg-red-500 hover:cursor-pointer'
+        class='button-secondary'
         data-action='split-transactions#remove_line'
         data-transaction-id='#{split_transaction.id}'
       ]
@@ -91,6 +97,7 @@
         "#{field_prefix}[_destroy]",
         '1',
         false,
+        class: 'hidden',
         data: {\
           split_transactions_target: 'splitTransactionDestroy',
           transaction_id: split_transaction.id,

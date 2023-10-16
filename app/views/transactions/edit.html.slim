@@ -68,13 +68,14 @@ div.p-8
             label: false,
           )
 
-        div.text-sm.pl-3.pr-4.py-1.flex.gap-x-4
+        div.text-sm.pl-3.pr-4.py-1.flex.gap-x-4.items-center
           = form.submit(\
-            class: 'bg-green-700 text-white px-2 py-1 rounded hover:bg-green-500 hover:cursor-pointer',
+            'Update',
+            class: 'button-primary',
           )
 
           = link_to(\
             'Cancel',
             transactions_path(page: params.fetch(:page, nil)),
-            class: 'col-span-2 items-center text-sm text-green-700 hover:text-green-900',
+            class: 'link-cancel',
           )

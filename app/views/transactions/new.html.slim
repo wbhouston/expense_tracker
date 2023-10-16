@@ -21,6 +21,7 @@ div.p-8
                 as: :date,
                 html5: true,
                 label: false,
+                wrapper: :expense_input,
               )
 
             td.text-sm.px-3.py-1
@@ -32,6 +33,7 @@ div.p-8
                   class: 'p-0.5 bg-gray-100 border border-gray-300 rounded focus:ring-2 focus:ring-green-500',
                 },
                 label: false,
+                wrapper: :expense_input,
               )
 
             td.text-sm.px-3.py-1
@@ -43,27 +45,32 @@ div.p-8
                   class: 'p-0.5 bg-gray-100 border border-gray-300 rounded focus:ring-2 focus:ring-green-500',
                 },
                 label: false,
+                wrapper: :expense_input,
               )
 
             td.text-sm.px-3.py-1
               = form.input(\
                 :amount,
                 label: false,
+                wrapper: :expense_input,
               )
 
             td.text-sm.px-3.py-1
               = form.input(\
                 :memo,
                 label: false,
+                wrapper: :expense_input,
               )
 
             td.text-sm.px-3.py-1
               = form.input(\
                 :note,
                 label: false,
+                wrapper: :expense_input,
               )
 
             td.text-sm.pl-3.pr-4.py-1.flex.gap-x-4
               = form.submit(\
-                class: 'bg-green-700 text-white px-2 py-1 rounded hover:bg-green-500 hover:cursor-pointer',
+                'Create',
+                class: 'button-primary',
               )
