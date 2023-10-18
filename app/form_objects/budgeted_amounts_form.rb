@@ -18,6 +18,10 @@ class BudgetedAmountsForm
     @expense_accounts ||= Account.expenses.order_by_number
   end
 
+  def revenue_accounts
+    @revenue_accounts ||= Account.revenues.order_by_number
+  end
+
   def save
     BudgetedAmount.transaction do
       budgeted_amounts_attributes.each do |attrs|

@@ -14,60 +14,31 @@ div.p-8
 
       table.w-full.mt-4
         thead
-          tr.border-b-4.border-gray-400
-            th Account
+          tr
+            th
             - @form_object.years.each do |year|
               th = year
         tbody
-          - @form_object.expense_accounts.each do |account|
-            tr.border-b.border-gray-100
-              td.py-4 = account.full_label
-              - @form_object.years.each do |year|
-                td.px-4
-                  - budgeted = @form_object.budgeted_amount(account.id, year)
-                  = form.fields_for(budgeted) do |budgeted_amount_form|
-                    - field_prefix = "budgeted_amounts_form[budgeted_amounts_attributes][]"
-                    = budgeted_amount_form.input(\
-                      :id,
-                      as: :hidden,
-                      input_html: {\
-                        name: "#{field_prefix}[id]",
-                      },
-                    )
-                    = budgeted_amount_form.input(\
-                      :account_id,
-                      as: :hidden,
-                      input_html: {\
-                        name: "#{field_prefix}[account_id]",
-                      },
-                    )
-                    = budgeted_amount_form.input(\
-                      :year,
-                      as: :hidden,
-                      input_html: {\
-                        name: "#{field_prefix}[year]",
-                      },
-                    )
-                    div.flex.items-center.gap-x-4
-                      = budgeted_amount_form.input(\
-                        :amount,
-                        input_html: {\
-                          name: "#{field_prefix}[amount]",
-                        },
-                        label: false,
-                        wrapper_html: {\
-                          class: 'max-w-16',
-                        },
-                        wrapper: :expense_input,
-                      )
-                      = budgeted_amount_form.input(\
-                        :frequency,
-                        as: :select,
-                        collection: [:monthly, :yearly],
-                        include_blank: false,
-                        input_html: {\
-                          name: "#{field_prefix}[frequency]",
-                        },
-                        label: false,
-                        wrapper: :expense_input,
-                      )
+          - if @form_object.revenue_accounts.present?
+            tr.border-b-4.border-gray-400
+              td
+                ' Revenues
+            - @form_object.revenue_accounts.each do |account|
+              = render(\
+                'budgets/budgeted_amount',
+                account: account,
+                form: form,
+                form_object: @form_object,
+              )
+
+          - if @form_object.expense_accounts.present?
+            tr.border-b-4.border-gray-400
+              td.pt-8
+                ' Expenses
+            - @form_object.expense_accounts.each do |account|
+              = render(\
+                'budgets/budgeted_amount',
+                account: account,
+                form: form,
+                form_object: @form_object,
+              )

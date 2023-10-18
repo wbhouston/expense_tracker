@@ -31,7 +31,7 @@ div.p-8 data-controller='profit-and-losses'
     ]
       ' Show Budgeted Amounts
   div.mt-8
-    table.w-full
+    table.w-full.overflow-x-scroll
       thead
         tr.border-b-4.border-gray-400
           th Account
@@ -39,32 +39,47 @@ div.p-8 data-controller='profit-and-losses'
           - (1..12).to_a.each do |month|
             th.text-right = Date::MONTHNAMES[month]
       tbody
-        - @report.revenue_accounts.each do |account|
+        - if @report.monthly_revenue_accounts.present?
+          tr.border-b-4.border-gray-400
+            td.text-left Monthly Revenues
+            td.text-right.border-r-4.border-gray-400.pr-2
+              = @report.monthly_revenue
+            - (1..12).to_a.each do |month|
+              td.text-right
+                = @report.monthly_revenue(month: month)
+        - @report.monthly_revenue_accounts.each do |account|
           tr.border-b.border-gray-100
             td = account.full_label
             td.text-right.border-r-4.border-gray-400.pr-2
-              = number_to_currency(@report.revenue_total(account_id: account.id))
+              = @report.monthly_revenue(account_id: account.id)
             - (1..12).to_a.each do |month|
               td.text-right
-                = number_to_currency(@report.revenue(account_id: account.id, month: month))
-        tr.border-t-2.border-gray-400.font-semibold
-          td Totals
-          td.text-right.border-r-4.border-gray-400.pr-2
-            = number_to_currency(@report.revenue_total_all)
-          - (1..12).to_a.each do |month|
-            td.text-right
-              = number_to_currency(@report.revenue_total_by_month(month: month))
+                = @report.monthly_revenue(account_id: account.id, month: month)
+
+        - if @report.yearly_revenue_accounts.present?
+          tr.border-b-4.border-gray-400
+            td.text-left.pt-8 Yearly Revenues
+            td.text-right.border-r-4.border-gray-400.pr-2.pt-8
+              = @report.yearly_revenue
+            - (1..12).to_a.each do |month|
+              td.text-right.pt-8
+                = @report.yearly_revenue(month: month)
+        - @report.yearly_revenue_accounts.each do |account|
+          tr.border-b.border-gray-100
+            td = account.full_label
+            td.text-right.border-r-4.border-gray-400.pr-2
+              = @report.yearly_revenue(account_id: account.id)
+            - (1..12).to_a.each do |month|
+              td.text-right
+                = @report.yearly_revenue(account_id: account.id, month: month)
 
         - if @report.monthly_expense_accounts.present?
           tr.border-b-4.border-gray-400
             td.text-left.pt-8 Monthly Expenses
-            td.text-right.border-r-4.border-gray-400.pr-2
-          tr.border-b-2.border-gray-400.font-semibold
-            td Totals
-            td.text-right.border-r-4.border-gray-400.pr-2
+            td.text-right.border-r-4.border-gray-400.pr-2.pt-8
               = @report.monthly_expense
             - (1..12).to_a.each do |month|
-              td.text-right
+              td.text-right.pt-8
                 = @report.monthly_expense(month: month)
           - @report.monthly_expense_accounts.each do |account|
             tr.border-b.border-gray-100
@@ -78,13 +93,10 @@ div.p-8 data-controller='profit-and-losses'
         - if @report.yearly_expense_accounts.present?
           tr.border-b-4.border-gray-400
             td.text-left.pt-8 Yearly Expenses
-            td.text-right.border-r-4.border-gray-400.pr-2
-          tr.border-b-2.border-gray-400.font-semibold
-            td Totals
-            td.text-right.border-r-4.border-gray-400.pr-2
+            td.text-right.border-r-4.border-gray-400.pr-2.pt-8
               = @report.yearly_expense
             - (1..12).to_a.each do |month|
-              td.text-right
+              td.text-right.pt-8
                 = @report.yearly_expense(month: month)
           - @report.yearly_expense_accounts.each do |account|
             tr.border-b.border-gray-100
