@@ -8,9 +8,11 @@ class AccountSumsByMonthQuery
       Account.arel_table[:id].as('account_id'),
       Transaction.amount_sum,
       Transaction.extract_month_from_date.as('month'),
+      Transaction.extract_year_from_date.as('year'),
     ).group(
       Account.arel_table[:id],
       Transaction.extract_month_from_date,
+      Transaction.extract_year_from_date,
     )
   end
 
@@ -28,11 +30,7 @@ class AccountSumsByMonthQuery
   end
 
   def for_year(year)
-    @scope = @scope.
-      select(Transaction.extract_year_from_date.as('year')).
-      group(Transaction.extract_year_from_date).where(
-        Transaction.extract_year_from_date.eq(year),
-      )
+    @scope = @scope.where(Transaction.extract_year_from_date.eq(year)) if year.present?
 
     self
   end

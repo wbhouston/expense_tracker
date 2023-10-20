@@ -43,7 +43,12 @@ class AccountsController < ApplicationController
   private
 
   def allowed_params
-    params.require(:account).permit(:name, :number, :account_type)
+    params.require(:account).permit(
+      :account_type,
+      :ignore_in_charts,
+      :name,
+      :number,
+    )
   end
 
   def load_account

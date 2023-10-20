@@ -2,5 +2,9 @@
 import 'controllers'
 import Rails from '@rails/ujs'
 import "@hotwired/turbo-rails"
+import "chartkick"
+import "Chart.bundle"
+import zoomPlugin from 'chartjs-plugin-zoom'
 
+Chart.register(zoomPlugin);
 Rails.start();

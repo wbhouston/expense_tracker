@@ -4,6 +4,7 @@
       :name,
       wrapper: :expense_input,
     )
+
     = form.input(\
       :number,
       wrapper: :expense_input,
@@ -12,6 +13,11 @@
     = form.input(\
       :account_type,
       collection: ::Account.types_for_collection,
+      wrapper: :expense_input,
+    )
+
+    = form.input(\
+      :ignore_in_charts,
       wrapper: :expense_input,
     )
 

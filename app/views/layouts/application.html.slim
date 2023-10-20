@@ -92,7 +92,12 @@ body.h-full
                 class_active: 'bg-gray-100',
               )
 
-          - reports_controllers = ['reports/profit_and_losses', 'reports/assets']
+          - reports_controllers = [\
+            'reports/assets',
+            'reports/dashboards',
+            'reports/profit_and_losses',
+          ]
+
           = content_tag(\
             :details,
             aria_controls: 'sub-menu-3',
@@ -103,6 +108,13 @@ body.h-full
             summary class='hover:bg-gray-50 hover:text-gray-900 px-2 py-2 text-left text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 before:ml-2' Reports
 
             div class='space-y-1 mt-1' id='sub-menu-1'
+              = active_link_to(\
+                'Dashboard',
+                reports_dashboards_path,
+                class: 'group flex w-full items-center rounded-md py-2 pl-10 pr-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+                class_active: 'bg-gray-100',
+              )
+
               = active_link_to(\
                 'Profits and Losses',
                 reports_profit_and_losses_path,

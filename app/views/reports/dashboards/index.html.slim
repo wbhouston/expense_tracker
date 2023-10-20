@@ -1,0 +1,13 @@
+div.p-8 data-controller='charts'
+  div.grid.xl:grid-cols-2.gap-12
+    div
+      h2 Cash Flows
+
+      canvas data-charts-target='chartContainer' data-url='#{reports_charts_cash_flow_url(:all)}
+        ' Loading...
+
+    div
+      h2 Asset Balances
+
+      canvas data-charts-target='chartContainer' data-url='#{reports_charts_asset_balance_url(:all)}
+        ' Loading...

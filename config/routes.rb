@@ -15,7 +15,13 @@ Rails.application.routes.draw do
 
   namespace :reports do
     resources :assets, only: :index
+    resources :dashboards, only: :index
     resources :profit_and_losses, only: :index
+
+    namespace :charts do
+      resources :asset_balances, only: :show
+      resources :cash_flows, only: :show
+    end
   end
 
   root 'accounts#index'

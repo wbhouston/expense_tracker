@@ -11,9 +11,9 @@ module Reports
 
     def monthly_expense(account_id: nil, month: nil)
       account_id = [account_id].compact.presence || monthly_expense_accounts.ids
-      month = [month].compact.presence || (1..12)
+      month = [month].compact.presence || (1..12).to_a
       amount = expense_amount(account_id: account_id, month: month)
-      budgeted = monthly_budgeted_expense(account_id: account_id, month: month)
+      budgeted = monthly_budgeted_amount(account_id: account_id, month: month)
 
       ::ProfitAndLossMonthlyCellViewObject.new(
         amount: amount,
@@ -33,9 +33,9 @@ module Reports
 
     def monthly_revenue(account_id: nil, month: nil)
       account_id = [account_id].compact.presence || monthly_revenue_accounts.ids
-      month = [month].compact.presence || (1..12)
+      month = [month].compact.presence || (1..12).to_a
       amount = revenue_amount(account_id: account_id, month: month)
-      budgeted = monthly_budgeted_revenue(account_id: account_id, month: month)
+      budgeted = monthly_budgeted_amount(account_id: account_id, month: month)
 
       ::ProfitAndLossMonthlyCellViewObject.new(
         amount: amount,
@@ -56,9 +56,9 @@ module Reports
 
     def yearly_expense(account_id: nil, month: nil)
       account_id = [account_id].compact.presence || yearly_expense_accounts.ids
-      month = [month].compact.presence || (1..12)
+      month = [month].compact.presence || (1..12).to_a
       amount = expense_amount(account_id: account_id, month: month)
-      amount_to_date = expense_amount(account_id: account_id, month: (1..month.last))
+      amount_to_date = expense_amount(account_id: account_id, month: (1..month.last).to_a)
       budgeted = yearly_budgeted_amount(account_id: account_id, month: month)
 
       ::ProfitAndLossYearlyCellViewObject.new(
@@ -80,9 +80,9 @@ module Reports
 
     def yearly_revenue(account_id: nil, month: nil)
       account_id = [account_id].compact.presence || yearly_revenue_accounts.ids
-      month = [month].compact.presence || (1..12)
+      month = [month].compact.presence || (1..12).to_a
       amount = revenue_amount(account_id: account_id, month: month)
-      amount_to_date = revenue_amount(account_id: account_id, month: (1..month.last))
+      amount_to_date = revenue_amount(account_id: account_id, month: (1..month.last).to_a)
       budgeted = yearly_budgeted_amount(account_id: account_id, month: month)
 
       ::ProfitAndLossYearlyCellViewObject.new(
@@ -105,12 +105,12 @@ module Reports
 
     private
 
-    def account_sums_by_month
-      @account_sums_by_month ||= ::AccountSumsByMonthFacade.new(year: year)
+    def account_sums_by_period_facade
+      @account_sums_by_period_facade ||= ::AccountSumsByPeriodFacade.new(year: year)
     end
 
     def expense_amount(account_id:, month:)
-      account_sums_by_month.expense_sum(account_id: account_id, month: month)
+      account_sums_by_period_facade.expense_sum(account_id: account_id, month: month)
     end
 
     def monthly_budgeted_amounts_by_account_id
@@ -122,36 +122,18 @@ module Reports
         to_h
     end
 
-    def monthly_budgeted_expense(account_id:, month:)
+    def monthly_budgeted_amount(account_id:, month:)
       monthly_budget = account_id.inject(0) do |account_sum, id|
           account_sum = month.inject(account_sum) do |month_sum, month|
             month_sum = month_sum + monthly_budgeted_amounts_by_account_id.fetch(id, 0)
           end
         end || 0
 
-      if month.size.eql?(12) && Date.current.year.eql?(year)
-        monthly_budget * (Date.current.month / 12.0)
-      else
-        monthly_budget
-      end
-    end
-
-    def monthly_budgeted_revenue(account_id:, month:)
-      monthly_budget = account_id.inject(0) do |account_sum, id|
-          account_sum = month.inject(account_sum) do |month_sum, month|
-            month_sum = month_sum + monthly_budgeted_amounts_by_account_id.fetch(id, 0)
-          end
-        end || 0
-
-      if month.size.eql?(12) && Date.current.year.eql?(year)
-        monthly_budget * (Date.current.month / 12.0)
-      else
-        monthly_budget
-      end
+      monthly_budget
     end
 
     def revenue_amount(account_id:, month:)
-      account_sums_by_month.revenue_sum(account_id: account_id, month: month)
+      account_sums_by_period_facade.revenue_sum(account_id: account_id, month: month)
     end
 
     def yearly_budgeted_amounts_by_account_id

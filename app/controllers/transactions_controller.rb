@@ -17,6 +17,7 @@ class TransactionsController < ApplicationController
     @transaction = Transaction.new(allowed_params)
 
     if @transaction.save
+      ::Cache::TransactionYearRange.bust_cache
       redirect_to transactions_path
     else
       render :new
@@ -31,6 +32,7 @@ class TransactionsController < ApplicationController
     @transaction = Transaction.find(params.fetch(:id))
 
     if @transaction.update(allowed_params)
+      ::Cache::TransactionYearRange.bust_cache
       respond_to do |format|
         format.html do
           redirect_to(
