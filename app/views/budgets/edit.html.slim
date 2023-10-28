@@ -5,7 +5,7 @@ div.p-8
     = simple_form_for(\
       @form_object,
       method: :patch,
-      url: budgets_path,
+      url: budget_path(@form_object.year),
     ) do |form|
       = form.submit(\
         'Update Budgeted Amounts',
@@ -16,8 +16,7 @@ div.p-8
         thead
           tr
             th
-            - @form_object.years.each do |year|
-              th = year
+            th = @form_object.year
         tbody
           - if @form_object.revenue_accounts.present?
             tr.border-b-4.border-gray-400

@@ -1,17 +1,22 @@
 #frozen_string_literal: true
 
 class BudgetsController < ApplicationController
+  def index
+    @presenter = BudgetIndexPresenter.new(view_context: view_context)
+  end
+
   def edit
-    @form_object = BudgetedAmountsForm.new
+    @form_object = BudgetedAmountsForm.new(year: params[:id])
   end
 
   def update
     @form_object = BudgetedAmountsForm.new(
-      budgeted_amounts_attributes: allowed_params.fetch(:budgeted_amounts_attributes, [])
+      budgeted_amounts_attributes: allowed_params.fetch(:budgeted_amounts_attributes, []),
+      year: params[:id],
     )
 
     if @form_object.save
-      redirect_to transactions_path
+      redirect_to budgets_path
     else
       render :edit
     end

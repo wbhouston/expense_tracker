@@ -1,0 +1,40 @@
+div.space-y-4.mt-8.max-w-lg
+  = form.input(\
+    :account_id,
+    collection: Account.where(account_type: %i[expense revenue]).order_by_number,
+    wrapper: :expense_input,
+  )
+
+  = form.input(\
+    :amount,
+    wrapper: :expense_input,
+  )
+
+  = form.input(\
+    :year,
+    disabled: true,
+    wrapper: :expense_input,
+  )
+
+  = form.input(\
+    :year,
+    as: :hidden,
+    wrapper: :expense_input,
+  )
+
+  = form.input(\
+    :month,
+    collection: 1..12,
+    wrapper: :expense_input,
+  )
+
+  div.flex.gap-x-8.items-center
+    = form.submit(\
+      class: 'button-primary',
+    )
+
+    = link_to(\
+      'Cancel',
+      one_time_budgeted_amounts_path(year: budgeted_amount.year),
+      class: 'link-cancel',
+    )

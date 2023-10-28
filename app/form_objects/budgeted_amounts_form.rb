@@ -3,14 +3,15 @@
 class BudgetedAmountsForm
   include ::ActiveModel::Model
 
-  attr_reader :budgeted_amounts_attributes
+  attr_reader :budgeted_amounts_attributes, :year
 
-  def initialize(budgeted_amounts_attributes: [])
+  def initialize(year:, budgeted_amounts_attributes: [])
     @budgeted_amounts_attributes = budgeted_amounts_attributes
+    @year = year
   end
 
-  def budgeted_amount(account_id, year)
-    budgeted_amounts.find { |ba| ba.account_id == account_id && ba.year == year } ||
+  def budgeted_amount(account_id)
+    budgeted_amounts.find { |ba| ba.account_id == account_id } ||
       BudgetedAmount.new(account_id: account_id, year: year)
   end
 
@@ -37,13 +38,9 @@ class BudgetedAmountsForm
     end
   end
 
-  def years
-    @years ||= ::Cache::TransactionYearRange.new.range
-  end
-
   private
 
   def budgeted_amounts
-    @budgeted_amounts ||= BudgetedAmount.all.to_a
+    @budgeted_amounts ||= BudgetedAmount.where(frequency: %i[monthly yearly], year: year)
   end
 end

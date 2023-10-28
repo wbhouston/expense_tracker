@@ -1,0 +1,10 @@
+div.p-8
+  h2 Edit One-time Budgeted Amount
+
+  = simple_form_for(\
+    @budgeted_amount,
+    method: :patch,
+    url: one_time_budgeted_amount_path(@budgeted_amount.id),
+   ) do |form|
+    = render 'one_time_budgeted_amounts/form', budgeted_amount: @budgeted_amount, form: form
+

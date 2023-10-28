@@ -1,0 +1,32 @@
+div.p-8
+  h2 Yearly Budgets
+
+  table.min-w-fit.mt-8
+    thead.bg-gray-50
+      tr
+        th.text-sm.font-semibold.py-2.pl-4.pr-3 Year
+        th.text-sm.font-semibold.py-2.px-3 Monthly Budget
+        th.text-sm.font-semibold.py-2.pl-3.pr-4 Yearly Budget
+        th.text-sm.font-semibold.py-2.pl-3.pr-4 One-time Budgeted Expenses
+        th.py-2.pl-3.pr-4 Actions
+
+    tbody
+      - @presenter.budgeted_years.each do |year|
+        tr
+          td.text-sm.pl-4.pr-3.py-1 = year
+          td.text-sm.px-3.py-1 = @presenter.monthly_budget_for_year(year)
+          td.text-sm.px-3.py-1 = @presenter.yearly_budget_for_year(year)
+          td.text-sm.px-3.py-1 = @presenter.one_time_budgeted_for_year(year)
+          td.text-sm.pl-3.pr-4.py-1.flex.gap-x-4
+            = render_button_menu(\
+              links: [\
+                {\
+                  label: 'Edit',
+                  url: edit_budget_path(year),
+                },
+                {\
+                  label: 'Manage One-Time Amounts',
+                  url: one_time_budgeted_amounts_path(year: year),
+                },
+              ],
+            )

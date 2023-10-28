@@ -125,11 +125,22 @@ module Reports
     def monthly_budgeted_amount(account_id:, month:)
       monthly_budget = account_id.inject(0) do |account_sum, id|
           account_sum = month.inject(account_sum) do |month_sum, month|
-            month_sum = month_sum + monthly_budgeted_amounts_by_account_id.fetch(id, 0)
+            month_sum = month_sum +
+              monthly_budgeted_amounts_by_account_id.fetch(id, 0) +
+              one_time_budgeted_amounts.fetch(id, {}).fetch(month, 0)
           end
         end || 0
 
       monthly_budget
+    end
+
+    def one_time_budgeted_amounts
+      @one_time_budgeted_amounts ||= BudgetedAmount.
+        joins(:account).
+        where(frequency: :one_time, year: year).
+        select(:account_id, :amount, :month).
+        map { |budgeted| [budgeted.account_id, { budgeted.month => budgeted.amount }] }.
+        to_h
     end
 
     def revenue_amount(account_id:, month:)
@@ -147,7 +158,11 @@ module Reports
 
     def yearly_budgeted_amount(account_id:, month:)
       yearly_budget = account_id.inject(0) do |sum, id|
-          sum = sum + yearly_budgeted_amounts_by_account_id.fetch(id, 0)
+          one_time_sum = month.inject(0) do |month_sum, month|
+            month_sum = month_sum + one_time_budgeted_amounts.fetch(id, {}).fetch(month, 0)
+          end
+
+          sum = sum + yearly_budgeted_amounts_by_account_id.fetch(id, 0) + one_time_sum
         end || 0
     end
   end
