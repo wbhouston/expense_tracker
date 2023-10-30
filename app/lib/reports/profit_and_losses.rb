@@ -135,12 +135,23 @@ module Reports
     end
 
     def one_time_budgeted_amounts
-      @one_time_budgeted_amounts ||= BudgetedAmount.
-        joins(:account).
-        where(frequency: :one_time, year: year).
-        select(:account_id, :amount, :month).
-        map { |budgeted| [budgeted.account_id, { budgeted.month => budgeted.amount }] }.
-        to_h
+      @one_time_budgeted_amounts ||=
+        begin
+          built_hash = {}
+
+          BudgetedAmount.
+            joins(:account).
+            where(frequency: :one_time, year: year).
+            select(:account_id, :amount, :month).
+            each do |budgeted|
+              built_hash[budgeted.account_id] ||= {}
+              built_hash[budgeted.account_id][budgeted.month] =
+                built_hash[budgeted.account_id][budgeted.month].to_f +
+                budgeted.amount
+            end
+
+            built_hash
+        end
     end
 
     def revenue_amount(account_id:, month:)
@@ -158,7 +169,7 @@ module Reports
 
     def yearly_budgeted_amount(account_id:, month:)
       yearly_budget = account_id.inject(0) do |sum, id|
-          one_time_sum = month.inject(0) do |month_sum, month|
+          one_time_sum = (1..month.last).inject(0) do |month_sum, month|
             month_sum = month_sum + one_time_budgeted_amounts.fetch(id, {}).fetch(month, 0)
           end
 
