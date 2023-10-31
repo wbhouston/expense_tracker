@@ -6,7 +6,7 @@
     interaction: {
       enabled: true,
       intersect: false,
-      mode: 'index',
+      mode: 'x',
     },
     plugins: {
       zoom: {
