@@ -3,6 +3,11 @@
     datasets: @view_object.balances_by_month,
   },
   options: {
+    interaction: {
+      enabled: true,
+      intersect: false,
+      mode: 'index',
+    },
     plugins: {
       zoom: {
         pan: {
@@ -28,7 +33,7 @@
           source: 'data',
         },
         time: {
-          tooltipFormat: 'yyyy DD'
+          tooltipFormat: 'LLL yyyy'
         },
         title: {
           display: true,

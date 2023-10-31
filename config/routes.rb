@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     namespace :charts do
       resources :asset_balances, only: :show
       resources :cash_flows, only: :show
+      resources :projected_expenses, only: :show
     end
   end
 

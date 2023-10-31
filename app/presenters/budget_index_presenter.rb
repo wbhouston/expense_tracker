@@ -13,7 +13,13 @@ class BudgetIndexPresenter
 
   def monthly_budget_for_year(year)
     view_context.number_to_currency(
-      BudgetedAmount.where(frequency: :monthly, year: year).pluck(:amount).sum,
+      BudgetedAmount.
+        joins(:account).
+        where(
+          accounts: { account_type: :expense },
+          frequency: :monthly,
+          year: year
+        ).pluck(:amount).sum,
       precision: 0,
     )
   end
@@ -30,7 +36,13 @@ class BudgetIndexPresenter
 
   def yearly_budget_for_year(year)
     view_context.number_to_currency(
-      BudgetedAmount.where(frequency: :yearly, year: year).pluck(:amount).sum,
+      BudgetedAmount.
+        joins(:account).
+        where(
+          accounts: { account_type: :expense },
+          frequency: :yearly,
+          year: year
+        ).pluck(:amount).sum,
       precision: 0,
     )
   end
