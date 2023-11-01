@@ -85,3 +85,5 @@ end
 
 gem "tailwindcss-rails", "~> 2.0"
 gem 'chartkick'
+
+gem "devise", "~> 4.9"

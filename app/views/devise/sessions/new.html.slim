@@ -1,0 +1,28 @@
+div.p-8
+  h2 Log in
+
+  div.mt-8.max-w-md
+    = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+      div.space-y-4.form-inputs
+        = f.input(\
+          :email,
+          autofocus: true,
+          input_html: { autocomplete: 'email' },
+          required: false,
+          wrapper: :expense_input,
+        )
+
+        = f.input(\
+          :password,
+          input_html: { autocomplete: 'current-password' },
+          required: false,
+          wrapper: :expense_input,
+        )
+
+        - if devise_mapping.rememberable?
+          = f.input :remember_me, as: :boolean
+
+      div.mt-8.form-actions
+        = f.button :submit, 'Log in'
+
+    = render 'devise/shared/links'

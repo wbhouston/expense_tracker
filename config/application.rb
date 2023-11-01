@@ -18,5 +18,6 @@ module ExpenseTracker
     #
     config.time_zone = "Eastern Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    config.action_mailer.default_url_options = { host: ENV['host'] }
   end
 end

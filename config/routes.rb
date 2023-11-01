@@ -1,6 +1,7 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  devise_for :users
   mount Sidekiq::Web => '/sidekiq'
 
 
@@ -26,5 +27,5 @@ Rails.application.routes.draw do
     end
   end
 
-  root 'accounts#index'
+  root 'reports/dashboards#index'
 end

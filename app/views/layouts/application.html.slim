@@ -21,6 +21,13 @@ body.h-full
         nav class='flex-1 space-y-1 bg-white px-2' aria-label='Sidebar'
           div
             = active_link_to(\
+              'Dashboard',
+              reports_dashboards_path,
+              class: 'text-gray-900 group w-full flex items-center pl-7 pr-2 py-2 text-sm font-medium rounded-md',
+              class_active: 'bg-gray-100',
+            )
+
+            = active_link_to(\
               'Transactions',
               transactions_path,
               class: 'text-gray-900 group w-full flex items-center pl-7 pr-2 py-2 text-sm font-medium rounded-md',
@@ -94,7 +101,6 @@ body.h-full
 
           - reports_controllers = [\
             'reports/assets',
-            'reports/dashboards',
             'reports/profit_and_losses',
           ]
 
@@ -109,13 +115,6 @@ body.h-full
 
             div class='space-y-1 mt-1' id='sub-menu-1'
               = active_link_to(\
-                'Dashboard',
-                reports_dashboards_path,
-                class: 'group flex w-full items-center rounded-md py-2 pl-10 pr-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900',
-                class_active: 'bg-gray-100',
-              )
-
-              = active_link_to(\
                 'Profits and Losses',
                 reports_profit_and_losses_path,
                 class: 'group flex w-full items-center rounded-md py-2 pl-10 pr-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900',
@@ -128,6 +127,16 @@ body.h-full
                 class: 'group flex w-full items-center rounded-md py-2 pl-10 pr-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900',
                 class_active: 'bg-gray-100',
               )
+
+          - if current_user
+            = link_to(\
+              'Sign Out',
+              destroy_user_session_path,
+              class: 'text-gray-900 group w-full flex items-center pl-7 pr-2 py-2 text-sm font-medium rounded-md',
+              class_active: 'bg-gray-100',
+              method: :delete,
+            )
+
 
   div class='flex flex-col lg:pl-64'
     = yield
