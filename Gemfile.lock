@@ -107,6 +107,9 @@ GEM
     foreman (0.87.2)
     globalid (1.0.0)
       activesupport (>= 5.0)
+    hpricot (0.8.6)
+    html2slim (0.2.0)
+      hpricot
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     importmap-rails (1.1.5)
@@ -301,6 +304,7 @@ DEPENDENCIES
   devise (~> 4.9)
   dotenv-rails
   foreman
+  html2slim
   importmap-rails
   inline_svg
   jbuilder

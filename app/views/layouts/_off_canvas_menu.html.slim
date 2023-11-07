@@ -1,0 +1,39 @@
+div data-controller='off-canvas-menu'
+  / Mobile top-bar
+  div.sticky.top-0.z-40.flex.items-center.gap-x-6.bg-white.px-4.py-4.shadow-sm.sm:px-6.lg:hidden
+    button.-m-2.5.p-2.5.text-gray-700.lg:hidden type="button" data-action='off-canvas-menu#open'
+      span.sr-only
+        | Open sidebar
+
+      = inline_svg_tag('heroicons/bars_3', class: 'h-6')
+
+    / Current page Title
+    div.flex-1.text-sm.font-semibold.leading-6.text-gray-900
+      | Expense Tracker
+
+    - if current_user
+      = link_to(\
+        'Sign Out',
+        destroy_user_session_path,
+        class: 'text-gray-900 group flex items-center pl-7 pr-2 py-2 text-sm font-medium rounded-md',
+        class_active: 'bg-gray-100',
+        method: :delete,
+      )
+
+  div.hidden.relative.z-50.lg:hidden role="dialog" aria-modal="true" data-off-canvas-menu-target='menu'
+    div.fixed.inset-0.bg-gray-900/80 data-action='click->off-canvas-menu#close'
+
+    div.fixed.inset-0.flex
+      div.relative.mr-16.flex.w-full.max-w-xs.flex-1
+        div.absolute.left-full.top-0.flex.w-16.justify-center.pt-5
+          button.-m-2.5.p-2.5 type="button" data-action='click->off-canvas-menu#close'
+            span.sr-only
+              | Close sidebar
+
+            = inline_svg_tag('heroicons/x', class: 'h-6 w-6 text-white')
+
+        div.flex.grow.flex-col.gap-y-5.overflow-y-auto.bg-white.px-6.pb-2 data-off-canvas-menu-target='menuContent'
+          div.flex.h-16.shrink-0.items-center
+            / Logo
+
+          = render('layouts/nav_links')
