@@ -1,0 +1,26 @@
+#!/bin/bash
+
+mkdir -p /shiny-app/tmp
+mount -t tmpfs tmpfs /shiny-app/tmp
+
+_term() {
+  echo "Caught term, send kill"
+  kill -SIGTERM "$child" 2>/dev/null
+}
+
+_int() {
+  echo "Caught int, send kill"
+  kill -SIGINT "$child" 2>/dev/null
+}
+
+trap _term TERM
+trap _int INT
+
+echo 'APP READY!'
+
+sleep infinity &
+child=$!
+
+wait $child
+exit 0
+
